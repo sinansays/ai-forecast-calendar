@@ -3,25 +3,69 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AI Forecast Calendar</title>
-  <meta name="description" content="Published AI forecast milestones, placed alongside real life in your calendar.">
+  <title>AI Forecast Calendar — Published forecasts in your calendar</title>
+  <meta name="description" content="Subscribe to published AI forecast milestones as ordinary calendar events, or download portable .ics files. No account required.">
+  <link rel="canonical" href="{{CANONICAL_URL}}">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="AI Forecast Calendar">
+  <meta property="og:title" content="Published AI forecasts, on an ordinary calendar">
+  <meta property="og:description" content="Follow dated milestones from published AI forecasts in the calendar you already use.">
+  <meta property="og:url" content="{{CANONICAL_URL}}">
   <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-  <header><a class="wordmark" href="/">AI Forecast Calendar</a></header>
-  <main>
-    <p class="eyebrow">A calendar for predicted futures</p>
-    <h1>Forecasts feel different<br>when they have a date.</h1>
-    <p class="lede">Published AI timelines are often abstract. This project places their milestones in your calendar, alongside the days when life actually happens.</p>
-    <section aria-labelledby="available">
-      <h2 id="available">Available calendars</h2>
-      <article>
-        <div><p class="date">2025—2027 · 3 milestones</p><h3>AI 2027</h3><p>Milestones from the AI 2027 scenario, anchored to concrete dates and linked to the original publication.</p><p>Source: <a href="https://ai-2027.com/">AI 2027</a></p></div>
-        <div class="actions"><a class="primary" href="/calendars/ai-2027.ics">Download or subscribe (.ics)</a><button id="copy" type="button">Copy subscription URL</button><span id="status" aria-live="polite"></span></div>
-      </article>
+  <a class="skip-link" href="#content">Skip to content</a>
+  <header class="site-header"><a class="wordmark" href="/" aria-label="AI Forecast Calendar home"><span aria-hidden="true">▦</span> AI Forecast Calendar</a><a href="#how-to-subscribe">How to subscribe</a></header>
+  <main id="content">
+    <section class="hero" aria-labelledby="page-title">
+      <p class="eyebrow">Published forecast → dated milestone → calendar event</p>
+      <h1 id="page-title">Predicted futures,<br><em>in ordinary time.</em></h1>
+      <p class="lede">Long-range forecasts can feel abstract on a page. We translate their dated milestones into calendar events—so predicted futures can sit alongside meetings, birthdays, and everything else that makes time feel real.</p>
+      <p class="note">Free to subscribe or download. No account required.</p>
+    </section>
+
+    <section class="catalogue" aria-labelledby="available-heading">
+      <div class="section-heading"><p class="section-number">01</p><h2 id="available-heading">Available calendars</h2><p>Each calendar is derived from a published source and retains links back to it.</p></div>
+      {{CALENDARS}}
+    </section>
+
+    <section class="instructions" id="how-to-subscribe" aria-labelledby="subscribe-heading">
+      <div class="section-heading"><p class="section-number">02</p><h2 id="subscribe-heading">Add a calendar</h2><p>Choose subscription for ongoing corrections, or download a fixed copy.</p></div>
+      <div class="instruction-grid">
+        <div>
+          <h3><span>Subscribe</span> Keep a feed connected</h3>
+          <ol>
+            <li>Copy the calendar’s subscription URL.</li>
+            <li>In your calendar provider, find “Add calendar by URL,” “Subscribe to calendar,” or the equivalent.</li>
+            <li>Paste the URL and confirm. Your provider decides how often it checks for updates.</li>
+          </ol>
+        </div>
+        <div>
+          <h3><span>Download</span> Import a fixed copy</h3>
+          <ol>
+            <li>Download the <code>.ics</code> file.</li>
+            <li>Open or import it in your calendar application.</li>
+            <li>Imported events do not update automatically; importing again may create duplicates.</li>
+          </ol>
+        </div>
+      </div>
+      <p class="provider-note"><strong>Why no one-click subscribe button?</strong> Browsers and calendar providers handle subscription links differently. Copying the stable URL is the most reliable, provider-neutral approach.</p>
     </section>
   </main>
-  <footer>Forecasts are presented as published scenarios, not as original predictions or endorsements.</footer>
-  <script>document.querySelector('#copy').addEventListener('click', async () => { const u = new URL('/calendars/ai-2027.ics', location.href).href; await navigator.clipboard.writeText(u); document.querySelector('#status').textContent = 'Copied'; });</script>
+  <footer><p><strong>AI Forecast Calendar</strong></p><p>A presentation layer for published scenarios—not a new forecast, prediction, or endorsement.</p><a href="#content">Back to top</a></footer>
+  <script>
+    for (const button of document.querySelectorAll('[data-copy-path]')) {
+      button.addEventListener('click', async () => {
+        const status = button.parentElement.querySelector('[role="status"]');
+        try {
+          await navigator.clipboard.writeText(new URL(button.dataset.copyPath, location.href).href);
+          status.textContent = 'Subscription URL copied.';
+          button.textContent = 'Copied';
+        } catch {
+          status.textContent = 'Copy was unavailable. Copy the URL shown below instead.';
+        }
+      });
+    }
+  </script>
 </body>
 </html>
