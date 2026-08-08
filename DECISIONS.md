@@ -1,5 +1,15 @@
 # Decision Log
 
+## 2026-08-08 — Dependency-free static build (supersedes “Static-site framework”)
+
+**Decision:** Use the dependency-free Node.js builder in `scripts/build.mjs`, with `site/index.html` and `site/styles.css` as the production site foundation. This decision supersedes the earlier Eleventy decision below.
+
+**Context:** Post-merge reconciliation left two competing site implementations: an Eleventy/Nunjucks tree and a simpler static template pipeline. Both targeted the same deployable artifact, so retaining both made it unclear which templates were authoritative and allowed an abandoned implementation to drift back into production.
+
+**Rationale:** The static builder already validates the canonical data, renders the selected HTML template, copies its stylesheet, and generates calendar feeds using only Node's standard library. Selecting it removes framework and template duplication without changing forecast milestone content or the published output contract.
+
+**Consequences:** `npm run build` produces `dist/index.html` and `dist/calendars/<forecast-id>.ics` directly from the selected pipeline. A build test pins `site/index.html` and `site/styles.css` as the production sources. The stronger behavior in `src/forecast-data.js` and `src/ics.js` remains available temporarily as donor code until it is migrated into the selected pipeline.
+
 ## 2026-08-08 — Static-site framework
 
 **Decision:** Use Eleventy 3 with Nunjucks templates and a small Node.js build script.

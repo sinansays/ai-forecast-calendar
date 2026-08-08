@@ -11,8 +11,19 @@ test('ICS generation is byte-for-byte deterministic', () => {
   assert.deepEqual(validateIcs(generateIcs(calendar)), []);
 });
 test('production build contains the landing page and validated stable feed', () => {
-  execFileSync(process.execPath, ['scripts/build.mjs']);
+  execFileSync('npm', ['run', 'build']);
   const html = fs.readFileSync('dist/index.html', 'utf8');
+  const template = fs.readFileSync('site/index.html', 'utf8');
+  const [templateStart, templateEnd] = template
+    .replaceAll('{{CANONICAL_URL}}', 'https://ai-forecast-calendar.org/')
+    .split('{{CALENDARS}}');
+  assert.ok(html.startsWith(templateStart), 'build must use the selected static HTML template');
+  assert.ok(html.endsWith(templateEnd), 'build must use the selected static HTML template');
+  assert.equal(
+    fs.readFileSync('dist/styles.css', 'utf8'),
+    fs.readFileSync('site/styles.css', 'utf8'),
+    'build must copy the selected static stylesheet',
+  );
   assert.match(html, /href="\/calendars\/ai-2027\.ics"/);
   assert.match(html, /3 milestones/);
   assert.match(html, /Agent-3 becomes a superhuman AI researcher/);
