@@ -1,0 +1,10 @@
+{
+  "name": "ai-forecast-calendar",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:calendars": "node scripts/build-calendars.js",
+    "test": "node --test"
+  }
+}

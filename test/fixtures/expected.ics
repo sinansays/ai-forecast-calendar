@@ -1,0 +1,24 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//AI Forecast Calendar//Forecast Milestones//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Forecast\, One\; 测试
+X-WR-CALDESC:A deterministic calendar fixture.
+BEGIN:VEVENT
+UID:forecast-stable.milestone-stable@ai-forecast-calendar
+DTSTAMP:20240229T000000Z
+DTSTART;VALUE=DATE:20271231
+DTEND;VALUE=DATE:20280101
+SUMMARY:Forecast\, One\; 测试: Unicode 🚀\, punctuation\; and escaping
+DESCRIPTION:Forecast: A backslash \\ and a line\nbreak\, with commas\; semi
+ colons.\n\nSource timing: Late 2027\n\nCalendar anchor: December 31\, 2027
+ \n\nContext: 多言語 content 多言語 content 多言語 content 多言
+ 語 content 多言語 content 多言語 content 多言語 content 多言
+ 語 content 多言語 content 多言語 content 多言語 content 多言
+ 語 content \n\nForecast uncertainty: Roughly 50%\; explicitly stated.\n\n
+ Source: https://example.com/forecast#milestone
+URL:https://example.com/forecast#milestone
+TRANSP:TRANSPARENT
+END:VEVENT
+END:VCALENDAR
