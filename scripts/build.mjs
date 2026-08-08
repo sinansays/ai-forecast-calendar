@@ -8,13 +8,13 @@ const formatDate = value => new Intl.DateTimeFormat('en', { year: 'numeric', mon
 const renderCalendar = calendar => {
   const milestones = [...calendar.milestones].sort((a, b) => a.calendar_date.localeCompare(b.calendar_date));
   const path = `/calendars/${encodeURIComponent(calendar.id)}.ics`;
-  const preview = milestones.slice(0, 5).map(item => `<li><time datetime="${escapeHtml(item.calendar_date)}">${escapeHtml(formatDate(item.calendar_date))}</time><strong>${escapeHtml(item.title)}</strong></li>`).join('');
-  return `<article class="calendar" aria-labelledby="${escapeHtml(calendar.id)}-title">
+  const preview = milestones.slice(0, 5).map(item => `<li data-milestone-id="${escapeHtml(item.id)}"><time datetime="${escapeHtml(item.calendar_date)}">${escapeHtml(formatDate(item.calendar_date))}</time><strong>${escapeHtml(item.title)}</strong></li>`).join('');
+  return `<article class="calendar" aria-labelledby="${escapeHtml(calendar.id)}-title" data-forecast-id="${escapeHtml(calendar.id)}" data-milestone-count="${milestones.length}">
     <div>
       <p class="range">${escapeHtml(formatDate(milestones[0].calendar_date))} — ${escapeHtml(formatDate(milestones.at(-1).calendar_date))} · ${milestones.length} milestones</p>
       <h3 id="${escapeHtml(calendar.id)}-title">${escapeHtml(calendar.title)}</h3>
       <p class="description">${escapeHtml(calendar.description)}</p>
-      <dl class="metadata"><dt>By</dt><dd><a href="${escapeHtml(calendar.source_url)}">${escapeHtml(calendar.attribution.display)} — original publication</a></dd><dt>Published</dt><dd><time datetime="${escapeHtml(calendar.publication_date)}">${escapeHtml(formatDate(calendar.publication_date))}</time></dd><dt>Date range</dt><dd>${escapeHtml(formatDate(milestones[0].calendar_date))} to ${escapeHtml(formatDate(milestones.at(-1).calendar_date))}</dd><dt>Events</dt><dd>${milestones.length} all-day milestones</dd></dl>
+      <dl class="metadata"><dt>Attribution</dt><dd>${escapeHtml(calendar.attribution.display)}</dd><dt>Published</dt><dd><time datetime="${escapeHtml(calendar.publication_date)}">${escapeHtml(formatDate(calendar.publication_date))}</time></dd><dt>Snapshot</dt><dd><time datetime="${escapeHtml(calendar.version.snapshot_date)}">${escapeHtml(formatDate(calendar.version.snapshot_date))}</time> · ${escapeHtml(calendar.version.label)}</dd><dt>Date range</dt><dd>${escapeHtml(formatDate(milestones[0].calendar_date))} to ${escapeHtml(formatDate(milestones.at(-1).calendar_date))}</dd><dt>Milestones</dt><dd>${milestones.length} all-day events</dd><dt>Source</dt><dd><a href="${escapeHtml(calendar.source_url)}">${escapeHtml(calendar.source_url)}</a></dd></dl>
       <div class="milestones"><h4>Milestone preview</h4><ol class="timeline">${preview}</ol></div>
     </div>
     <aside class="action-panel" aria-label="${escapeHtml(calendar.title)} calendar options">
@@ -27,11 +27,17 @@ const renderCalendar = calendar => {
   </article>`;
 };
 
-const forecasts = fs.readdirSync('data/forecasts')
-  .filter(file => file.endsWith('.json'))
-  .sort()
-  .map(file => validateForecast(JSON.parse(fs.readFileSync(path.join('data/forecasts', file), 'utf8'))));
-if (!forecasts.length) throw new Error('No canonical forecasts found');
+const dataDirectory = process.argv[2] || process.env.FORECAST_DATA_DIR || 'data/forecasts';
+const forecastFiles = fs.readdirSync(dataDirectory, { withFileTypes: true })
+  .filter(entry => entry.isFile() && entry.name.endsWith('.json'))
+  .map(entry => entry.name)
+  .sort();
+if (!forecastFiles.length) throw new Error(`No canonical forecasts found in ${dataDirectory}`);
+
+// Finish loading and validating the entire input set before touching dist/. The
+// branded objects returned here are the sole inputs to both output formats.
+const forecasts = forecastFiles
+  .map(file => validateForecast(JSON.parse(fs.readFileSync(path.join(dataDirectory, file), 'utf8'))));
 fs.rmSync('dist', { recursive: true, force: true });
 fs.mkdirSync('dist/calendars', { recursive: true });
 for (const file of fs.readdirSync('site')) {
