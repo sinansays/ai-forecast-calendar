@@ -12,6 +12,12 @@ test('ICS generation is byte-for-byte deterministic', () => {
 });
 test('production build contains the landing page and validated stable feed', () => {
   execFileSync(process.execPath, ['scripts/build.mjs']);
-  assert.match(fs.readFileSync('dist/index.html', 'utf8'), /href="\/calendars\/ai-2027\.ics"/);
+  const html = fs.readFileSync('dist/index.html', 'utf8');
+  assert.match(html, /href="\/calendars\/ai-2027\.ics"/);
+  assert.match(html, /3 milestones/);
+  assert.match(html, /Agent-3 becomes a superhuman AI researcher/);
+  assert.match(html, /rel="canonical" href="https:\/\/ai-forecast-calendar\.org\/"/);
+  assert.match(html, /property="og:title"/);
+  assert.doesNotMatch(html, /\{\{CALENDARS\}\}/);
   assert.deepEqual(validateIcs(fs.readFileSync('dist/calendars/ai-2027.ics', 'utf8')), []);
 });
