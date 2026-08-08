@@ -5,8 +5,11 @@
   "type": "module",
   "scripts": {
     "build": "node scripts/build.mjs",
-    "check": "node --test",
+    "clean": "node -e \"require('node:fs').rmSync('dist', { recursive: true, force: true })\"",
+    "check": "npm test && npm run test:python && npm run check:modules && npm run validate:data && npm run clean && npm run build && npm run validate:ics",
     "test": "node --test",
+    "test:python": "python -m unittest discover -s tests -v",
+    "check:modules": "node scripts/check-modules.mjs",
     "validate:data": "node scripts/validate-canonical.mjs data/forecasts/ai-2027.json",
     "validate:ics": "node scripts/validate-ics.mjs dist/calendars/ai-2027.ics",
     "smoke": "node scripts/smoke.mjs"
