@@ -1,84 +1,39 @@
 # Decision Log
 
-## 2026-08-08 — Dependency-free static build (supersedes “Static-site framework”)
+## 2026-08-08 — Reconciled production architecture
 
-**Decision:** Use the dependency-free Node.js builder in `scripts/build.mjs`, with `site/index.html` and `site/styles.css` as the production site foundation. This decision supersedes the earlier Eleventy decision below.
+**Decision:** Use one dependency-free static pipeline. [`scripts/build.mjs`](scripts/build.mjs) validates all canonical forecasts, renders [`site/index.html`](site/index.html), copies [`site/styles.css`](site/styles.css), and generates the website, discovery manifest, and iCalendar feeds in `dist/`. This supersedes the earlier Eleventy/Nunjucks proposal and every parallel static-site implementation.
 
-**Context:** Post-merge reconciliation left two competing site implementations: an Eleventy/Nunjucks tree and a simpler static template pipeline. Both targeted the same deployable artifact, so retaining both made it unclear which templates were authoritative and allowed an abandoned implementation to drift back into production.
+**Rationale:** The site has no runtime application or server requirements. One standard-library build keeps the HTML and feeds derived from the same validated records and eliminates competing templates and generators.
 
-**Rationale:** The static builder already validates the canonical data, renders the selected HTML template, copies its stylesheet, and generates calendar feeds using only Node's standard library. Selecting it removes framework and template duplication without changing forecast milestone content or the published output contract.
+**Consequences:** `dist/` is disposable and uncommitted. `npm run check` is the authoritative pre-deployment gate. Production source code is limited to the selected builder, templates, validator, and serializer.
 
-**Consequences:** `npm run build` produces `dist/index.html` and `dist/calendars/<forecast-id>.ics` directly from the selected pipeline. A build test pins `site/index.html` and `site/styles.css` as the production sources. Canonical validation and ICS serialization share the retained `src/forecast-calendar.js` module.
+## 2026-08-08 — Canonical forecast schema and location
 
-## 2026-08-08 — Static-site framework
+**Decision:** One UTF-8 JSON file per reviewed forecast lives in [`data/forecasts/`](data/forecasts/) and conforms to [`data/forecast.schema.json`](data/forecast.schema.json). No compatibility index, generated manifest, candidate file, or published feed is canonical.
 
-**Decision:** Use Eleventy 3 with Nunjucks templates and a small Node.js build script.
+**Required record shape:** A forecast has a stable ID, title, description, HTTPS source URL, publication date, version/snapshot metadata, attribution, and milestones. Every milestone has a stable ID, title, original source timing, normalized ISO calendar date, precision, summary, source context, HTTPS source URL, and normalization rationale; uncertainty and conditional branch are supported where applicable.
 
-**Context:** The product is a content-led microsite generated from a small set of structured forecasts. It needs design flexibility and build-time ICS generation, but no client application or server.
+**Consequences:** Candidate records remain isolated in [`data/candidates/`](data/candidates/) until manual review and guarded promotion. Both HTML and ICS output consume only validated canonical records. Material source interpretations and date corrections require changelog entries.
 
-**Rationale:** Eleventy produces plain static files, supports data-driven pages, adds little runtime complexity, and lets the calendar generator use Node's standard library. Nunjucks keeps page templates readable.
+## 2026-08-08 — Stable feed identity and UID policy
 
-**Consequences:** Contributors need Node.js, and build behavior lives in two straightforward layers: Eleventy for HTML and Node for ICS. There is no browser-side framework and no application server.
+**Decision:** Publish each feed at `/calendars/<forecast-id>.ics`. Every VEVENT UID is `<forecast-id>.<milestone-id>@ai-forecast-calendar`.
 
-## 2026-08-08 — Static hosting
+**Rationale:** Calendar clients use feed paths and event UIDs as durable identities. IDs—not build time, array position, titles, or normalized dates—therefore control identity.
 
-**Decision:** Deploy the `dist/` build artifact to GitHub Pages using GitHub Actions, with a custom domain recommended before calendar URLs are publicized.
+**Consequences:** Published forecast and milestone IDs are permanent. Corrections retain IDs; a genuinely new forecast version normally receives a new forecast ID. The pre-reconciliation audit found no successful public deployment or known subscribers requiring an older UID compatibility map. If contrary evidence appears, add an explicit published-UID map before changing an affected event.
 
-**Context:** The site and feeds are immutable static files, and subscription links must remain available without operating a server.
+## 2026-08-08 — GitHub Pages hosting
 
-**Rationale:** GitHub Pages matches the repository workflow, serves arbitrary `.ics` assets, and has negligible operational overhead. A custom domain decouples public URLs from the repository name or future hosting provider.
+**Decision:** GitHub Pages, deployed by [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml), is the only supported production hosting target. A custom domain is required before subscription URLs are publicized.
 
-**Consequences:** Pages must be enabled with GitHub Actions as its source. DNS and the custom domain are configured outside this repository. Moving hosts remains possible as long as the domain and paths are preserved.
+**Rationale:** Pages directly hosts the immutable `dist/` artifact with no server operations. A custom domain preserves the public origin across a future infrastructure migration.
 
-## 2026-08-08 — Canonical forecast data
+**Consequences:** Alternative-host configuration is not retained. The deployment workflow must fetch the deployed `/calendars/ai-2027.ics` and verify its actual HTTP `Content-Type` contains `text/calendar`; repository configuration alone is not evidence. The domain and stable `/calendars/<forecast-id>.ics` paths must survive any future hosting change.
 
-**Decision:** Store one UTF-8 JSON file per forecast in `src/_data/forecasts/`, with stable forecast and milestone IDs, source metadata, normalized ISO dates, source timing, date precision, and a milestone list.
+## 2026-08-08 — AI 2027 milestone reconciliation
 
-**Context:** Both pages and calendar feeds need the same reviewed source of truth. The data should remain inspectable and editable without database infrastructure.
+**Decision:** [`data/forecasts/ai-2027.json`](data/forecasts/ai-2027.json) contains the consolidated 24-milestone reviewed snapshot, including both conditional post-November `slowdown` and `race` branches.
 
-**Rationale:** JSON is natively supported by Node and Eleventy, deterministic, broadly tooled, and easy for humans and agents to review. A file boundary per forecast makes snapshots and corrections clear.
-
-**Consequences:** Schema validation can be added when the first data set lands. Editors must preserve stable IDs and explicitly record the difference between source timing and its calendar anchor.
-
-## 2026-08-08 — Stable ICS URLs
-
-**Decision:** Publish every feed at `/calendars/<forecast-id>.ics`; for example, `/calendars/ai-2027.ics`.
-
-**Context:** Calendar applications retain subscribed URLs, so changing a feed path breaks updates for existing subscribers.
-
-**Rationale:** A forecast's stable ID provides a short, predictable, host-independent path. Generating a real file at that location works on any static host without redirects or routing logic.
-
-**Consequences:** Forecast IDs and published paths are permanent API-like contracts. Revised forecasts should normally receive new IDs; corrections may update content at the existing path. Deployments must preserve the `calendars/` directory verbatim.
-## 2026-08-08 — Canonical AI 2027 reconciliation
-
-`data/forecasts/ai-2027.json` is the single canonical record and is governed by
-`data/forecast.schema.json`. The YAML review document was removed only after all
-24 entries were transferred, counted, and compared. `data/forecasts.json` is
-retained only as the generated discovery/presentation index because the build
-supports multiple calendars; it is not an editorial source of truth. The site
-and published ICS continue to consume that compatibility index in this change,
-so reconciliation cannot silently rewrite existing subscribers' events.
-
-The source calls the opening period “Summer 2025,” not “Mid-2025.” We therefore
-use July 15, 2025 as a representative summer anchor instead of copying either
-June 15 from the former four-event record or July 1 from the YAML draft. “Early”
-year references use February 15, month-only references use the 15th, and
-year-only references use July 1. These are calendar anchors, not claims of
-day-level source precision. Post-November events remain explicitly marked as
-conditional `slowdown` or `race` branches. Existing compatible IDs
-`stumbling-agents`, `agent-1`, and `agent-2` are retained; the misleading old
-three-event index is not used to rename or re-date the remaining canonical
-milestones.
-## 2026-08-08: Canonical event UID convention
-
-**Decision:** Event UIDs are `<forecast-id>.<milestone-id>@ai-forecast-calendar`.
-
-**Context:** Before consolidating calendar generation, the preserved feed audit
-checked the known project-controlled public channels and found no successful
-deployment, release, Pages site, or other distribution. There were therefore no
-known public subscribers whose already-published UIDs required a compatibility
-map. The audit fixture remains committed as evidence of that check.
-
-**Consequences:** Forecast and milestone IDs are permanent identity fields. If
-evidence of an older public feed is discovered later, an explicit milestone-ID
-to published-UID map must be introduced before changing any affected event.
+**Source/date interpretation:** The source says “Summer 2025,” not “Mid-2025”; the representative anchor is 2025-07-15. “Early” year references use February 15, month-only references use the 15th, and year-only references use July 1. These anchors do not claim day-level source precision. Existing compatible IDs including `stumbling-agents`, `agent-1`, and `agent-2` remain stable.

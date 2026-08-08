@@ -1,4 +1,0 @@
-/calendars/*.ics
-  Content-Type: text/calendar; charset=utf-8
-  Content-Disposition: inline
-  Cache-Control: public, max-age=3600
