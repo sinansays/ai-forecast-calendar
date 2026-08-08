@@ -127,45 +127,43 @@ AI Forecast Calendar converts milestones from published AI forecast timelines in
 ## Local development
 
 ```sh
-npm install
-npm run dev
-```
-
-Eleventy serves the site locally and watches templates for changes. The ICS feeds are generated once when the development server starts; restart it after changing forecast JSON.
-
-Create a clean production build with:
-
-```sh
 npm run build
 ```
 
-The deployable site is written to `dist/`. `npm test` currently performs the same clean production build, catching invalid imports, templates, or forecast JSON.
+The dependency-free Node.js builder creates a clean production build in `dist/`. To preview it locally after building, serve that directory with any static file server, for example:
+
+```sh
+python3 -m http.server --directory dist 8080
+```
+
+`npm test` also performs the production build and verifies that the selected static template and stylesheet produced the deployable site.
 
 ## Repository structure
 
 ```text
 .github/workflows/deploy.yml  GitHub Pages build and deployment
-scripts/build-calendars.js   Deterministic JSON-to-ICS generator
-src/_data/forecasts/         Canonical, reviewed forecast JSON
-src/_includes/               Shared Eleventy layouts
-src/                         Site pages and templates
-public/                      Assets copied directly to the site root
+data/forecasts.json          Canonical, reviewed forecast data
+scripts/build.mjs            Static HTML and deterministic ICS builder
+site/index.html              Production HTML template
+site/styles.css              Production stylesheet
+src/forecast-data.js         Temporary donor validation implementation
+src/ics.js                   Temporary donor ICS implementation
 SPEC.md                      Product and engineering requirements
 DECISIONS.md                 Durable product and architecture decisions
 CHANGELOG.md                 Meaningful project changes
 ```
 
-`dist/` and `public/calendars/` are generated and must not be committed.
+`dist/` is generated and must not be committed.
 
 ## Forecast data pipeline
 
-One reviewed JSON file in `src/_data/forecasts/` is the canonical source for each forecast. It contains source provenance plus milestones with stable IDs, original timing language, normalized `YYYY-MM-DD` calendar anchors, and date precision.
+`data/forecasts.json` is the canonical source for the reviewed forecasts. It contains source provenance plus milestones with stable IDs, original timing language, normalized `YYYY-MM-DD` calendar anchors, and date precision.
 
 During `npm run build`:
 
-1. `scripts/build-calendars.js` reads each forecast JSON file and creates `public/calendars/<forecast-id>.ics`.
-2. Eleventy reads the same files through `src/_data/forecasts.js`, renders site content, and copies `public/` unchanged.
-3. The complete static artifact lands in `dist/`, including feeds at stable paths such as `dist/calendars/ai-2027.ics`.
+1. `scripts/build.mjs` validates the forecast data and renders it into `site/index.html`.
+2. The builder copies `site/styles.css` and generates each validated calendar feed.
+3. The complete static artifact lands in `dist/`, including `dist/index.html` and feeds at stable paths such as `dist/calendars/ai-2027.ics`.
 
 This keeps the website and subscriptions derived from a single human-reviewable source. Published forecast IDs are permanent because calendar clients retain their subscription URLs.
 
