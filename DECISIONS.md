@@ -49,3 +49,23 @@
 **Rationale:** A forecast's stable ID provides a short, predictable, host-independent path. Generating a real file at that location works on any static host without redirects or routing logic.
 
 **Consequences:** Forecast IDs and published paths are permanent API-like contracts. Revised forecasts should normally receive new IDs; corrections may update content at the existing path. Deployments must preserve the `calendars/` directory verbatim.
+## 2026-08-08 — Canonical AI 2027 reconciliation
+
+`data/forecasts/ai-2027.json` is the single canonical record and is governed by
+`data/forecast.schema.json`. The YAML review document was removed only after all
+24 entries were transferred, counted, and compared. `data/forecasts.json` is
+retained only as the generated discovery/presentation index because the build
+supports multiple calendars; it is not an editorial source of truth. The site
+and published ICS continue to consume that compatibility index in this change,
+so reconciliation cannot silently rewrite existing subscribers' events.
+
+The source calls the opening period “Summer 2025,” not “Mid-2025.” We therefore
+use July 15, 2025 as a representative summer anchor instead of copying either
+June 15 from the former four-event record or July 1 from the YAML draft. “Early”
+year references use February 15, month-only references use the 15th, and
+year-only references use July 1. These are calendar anchors, not claims of
+day-level source precision. Post-November events remain explicitly marked as
+conditional `slowdown` or `race` branches. Existing compatible IDs
+`stumbling-agents`, `agent-1`, and `agent-2` are retained; the misleading old
+three-event index is not used to rename or re-date the remaining canonical
+milestones.

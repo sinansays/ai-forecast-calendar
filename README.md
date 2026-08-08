@@ -1,6 +1,6 @@
 # AI Forecast Calendar
 
-AI Forecast Calendar turns dated milestones from published AI scenarios into a small static site and portable iCalendar feeds. Canonical forecast records live in [`data/forecasts.json`](data/forecasts.json); generated files in `dist/` are disposable build output.
+AI Forecast Calendar turns dated milestones from published AI scenarios into a small static site and portable iCalendar feeds. Canonical forecast records live under [`data/forecasts/`](data/forecasts/), conform to [`data/forecast.schema.json`](data/forecast.schema.json), and are validated independently before publication. [`data/forecasts.json`](data/forecasts.json) is the generated discovery/presentation compatibility index; generated files in `dist/` are disposable build output.
 
 ## Local workflow
 
