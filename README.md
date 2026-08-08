@@ -1,183 +1,65 @@
 # AI Forecast Calendar
 
-AI Forecast Calendar turns dated milestones from published AI scenarios into a small static site and portable iCalendar feeds. Canonical forecast records live under [`data/forecasts/`](data/forecasts/), conform to [`data/forecast.schema.json`](data/forecast.schema.json), and are validated before publication. Generated files in `dist/` are disposable build output.
+AI Forecast Calendar publishes reviewed milestones from external AI scenarios as a static website and deterministic iCalendar feeds. It is a presentation and distribution project, not an endorsement or a prediction-resolution service.
 
-## Local workflow
+## Architecture and canonical data
 
-Node.js 20 or newer is the only requirement. The checks do not fetch packages or access the network.
+There is one production architecture: the dependency-free Node.js builder in [`scripts/build.mjs`](scripts/build.mjs) reads the reviewed JSON records in [`data/forecasts/`](data/forecasts/), validates them with [`data/forecast.schema.json`](data/forecast.schema.json) and [`src/forecast-calendar.js`](src/forecast-calendar.js), renders [`site/index.html`](site/index.html), copies [`site/styles.css`](site/styles.css), and writes disposable artifacts to `dist/`.
 
-```sh
-npm run validate:data       # validate canonical schema and invariants
-npm test                    # focused JavaScript unit/integration tests (including a production-build fixture)
-npm run check               # complete local/CI gate; run this before deployment
-npm run build               # regenerate dist/ from canonical data
-npm run validate:ics        # inspect the generated AI 2027 feed
-```
+`data/forecasts/` is the only canonical data location. Candidate extraction files belong in [`data/candidates/`](data/candidates/) and never feed the build. Generated files in `dist/` must not be edited or committed.
 
-`validate:ics` is read-only: it checks CRLF line endings, RFC 5545's 75-octet content-line limit, calendar/component boundaries, required event properties, and unique UIDs without rewriting either the feed or canonical JSON. To inspect another generated file, run:
+The build produces:
 
-```sh
-node scripts/validate-ics.mjs path/to/calendar.ics
-```
+- `dist/index.html` and `dist/styles.css`;
+- `dist/calendars/index.json`, a generated discovery manifest; and
+- `dist/calendars/<forecast-id>.ics`, one stable feed per canonical forecast.
 
-This deliberately small validator checks the portability requirements this generator relies on; it is not a claim of exhaustive RFC 5545 conformance. For release review, it can be paired with a trusted standalone standards validator if organizational policy requires one. Never replace canonical JSON with output from a validator or calendar provider.
+Forecast and milestone IDs are permanent slugs. An event UID is `<forecast-id>.<milestone-id>@ai-forecast-calendar`; neither array order nor build time affects identity. Source timing remains separate from its normalized calendar date.
 
-## Deployment
+## Build and test
 
-Deploy the contents of `dist/`, preserving `/calendars/ai-2027.ics` as the stable public subscription URL. Configure the host to return `.ics` files as `text/calendar; charset=utf-8`; `netlify.toml` contains one working static-host configuration.
-
-`npm test` is the fast JavaScript test suite: schema validation, deterministic ICS
-serialization, and production-build integration coverage. `npm run check` is the
-superset used before deployment: it runs `npm test`, the supported Python ingestion
-tests, a syntax/import check of every maintained JavaScript module, canonical-data
-validation, a clean production build, and validation of the generated ICS feed.
-
-Deployment smoke tests are intentionally not part of either command because they
-require a deployed origin. After deployment, run the read-only HTTP smoke check:
-
-```sh
-npm run smoke -- https://calendar.example.org
-```
-
-It verifies the landing page, public source attribution, download/subscription path, stable feed URL, successful responses, feed boundaries, source link, and the expected HTML and calendar content types. Run it against the production origin—not a preview URL—after every routing or hosting change. A changed subscription URL is a breaking change.
-
-## Human acceptance testing
-
-Generated markup is not evidence of calendar-provider compatibility. Follow the provider scenarios and record actual results in [`docs/provider-testing.md`](docs/provider-testing.md) only after performing them. Use [`docs/manual-verification.md`](docs/manual-verification.md) for the concise browser and responsive review.
-
-## Adding a forecast
-
-Add a canonical calendar record and its milestones under `data/forecasts/`. IDs are permanent slugs and become event UIDs and public paths. Preserve the source's stated timing separately from the concrete calendar anchor; use the 15th for a month-only date and July 1 for a year-only date. Every milestone needs an HTTPS source URL. Then run the complete local workflow above and review the text of the generated feed before deployment.
-Converts published AI forecast timelines into calendar feeds and ICS files, making future milestones easier to compare against real life.
-
-## Build and verify
-
-Requires Node.js 20 or newer and has no runtime dependencies.
+Install Node.js 20 or newer and Python 3. No third-party runtime or Python packages are required.
 
 ```sh
 npm run build
+npm test
 npm run check
 ```
 
-The build validates records under `data/forecasts/` before generating deterministic production artifacts under `dist/calendars/`. Invalid or incomplete source data stops the build; the ICS serializer does not accept an unvalidated object.
+`npm run build` validates all canonical records and regenerates `dist/`. `npm test` runs the JavaScript tests. `npm run check` is the authoritative pre-deployment command: it runs JavaScript and Python tests, checks maintained module syntax/imports, validates canonical data, performs a clean build, and validates the generated AI 2027 feed. The command is offline and is the required local and CI gate.
 
-## Download or subscribe
+## AI 2027 ingestion workflow
 
-The same stable URL supports two different calendar workflows:
+[`scripts/ai2027_ingest.py`](scripts/ai2027_ingest.py) is deliberately source-specific; it is not a general scraper.
 
-* **Subscribe:** give `https://YOUR-HOST/calendars/ai-2027.ics` to the “calendar subscription” or “calendar from URL” feature in your calendar app. The app can periodically fetch corrections published at that URL.
-* **Download/import:** download `dist/calendars/ai-2027.ics`, then import it as a file. Imported events are a copy and will **not** receive later corrections automatically.
+1. **Extract.** Run the `extract` subcommand with the explicit AI 2027 HTTPS source URL, an optional saved HTML input, and a candidate output under `data/candidates/`. The extractor records the input digest, source section and anchor, original timing words, supporting passage, and URL. Without an input file it retrieves the supplied URL.
+2. **Review.** Compare every candidate with the linked source. Merge passages describing one conceptual milestone, assign permanent IDs, and correct titles and context. Exact dates stay exact; month-only dates use the 15th; year-only dates use July 1; ranges use their midpoint (the earlier date for a half-day tie); ambiguous prose requires an explicitly reviewed manual ISO date. Never replace the original `source_timing` text.
+3. **Validate.** Run `python -m scripts.ai2027_ingest validate` with the candidate filename, then run `npm run check` after canonical promotion.
+4. **Promote.** Run the `promote` subcommand with the reviewed candidate and [`data/forecasts/ai-2027.json`](data/forecasts/ai-2027.json). Promotion validates the candidate and refuses to overwrite canonical data. Canonical corrections must instead be reviewed direct edits recorded in [`CHANGELOG.md`](CHANGELOG.md).
 
-Do not repeatedly import a downloaded file: most calendar applications create duplicate events. Prefer subscription when updates are wanted. Refresh schedules are controlled by each calendar provider and may not be immediate.
-
-`public/_headers` configures the calendar media type on hosts that support the Netlify/Cloudflare Pages headers format. `vercel.json` applies the equivalent header on Vercel. Other static hosts should serve `.ics` files as `text/calendar; charset=utf-8` while preserving the stable path.
-
-## Data and identity guarantees
-
-Canonical forecast records have human-readable, stable forecast and milestone IDs. Event UIDs derive only from those IDs, while `DTSTAMP` derives from the source version's stable `snapshot_date` metadata. Generation never uses build time or array position. Approximate source timing remains distinct from the normalized calendar anchor in each event description.
-## AI 2027 source workflow
-
-The repository deliberately has one small, source-specific ingestion program rather than a reusable scraping framework. `scripts/ai2027_ingest.py` accepts an explicit source URL and either retrieves that URL or parses an explicitly named saved HTML file. Every candidate retains the source URL (including a section fragment), section name and anchor, the source's timing words, and the supporting passage.
-
-### 1. Extract candidates
-
-For reproducible review, save a source snapshot and identify both inputs on the command line:
-
-```bash
-python -m scripts.ai2027_ingest extract \
-  --source-url https://ai-2027.com/ \
-  --input path/to/ai-2027-snapshot.html \
-  --output data/candidates/ai-2027.json
-```
-
-Omit `--input` to retrieve the explicit `--source-url`. Candidate output is sorted and contains a SHA-256 digest of the input, so the same snapshot produces byte-for-byte deterministic JSON. Extraction only recognizes AI 2027's dated narrative passages; it intentionally does not guess at ambiguous prose.
-
-### 2. Review and correct
-
-Review `data/candidates/ai-2027.json` against each linked source section. Merge passages that describe the same conceptual milestone, choose permanent IDs, and check titles and context. Date normalization is deterministic:
-
-| Source timing | Calendar anchor | Precision |
-| --- | --- | --- |
-| Exact date | That date | `exact` |
-| Month and year | The 15th | `month` |
-| Year only | July 1 | `year` |
-| Range | Midpoint (earlier day for a half-day tie) | `range` |
-| Ambiguous prose | Explicit reviewer-supplied ISO date | `ambiguous` |
-
-Ambiguous prose must be passed to `normalize_timing(..., manual_date="YYYY-MM-DD", reviewed=True)`; its original words remain in `source_timing`, and the result is labeled as manually reviewed. Never replace source wording with the normalized date.
-
-Validate edits before promotion:
-
-```bash
-python -m scripts.ai2027_ingest validate data/candidates/ai-2027.json
-python -m unittest discover -s tests -v
-```
-
-Validation rejects missing forecast or milestone IDs, duplicate milestone IDs, malformed ISO dates, invalid/missing provenance URLs, missing anchors or context, unknown precision values, and approximate dates lacking source timing.
-
-### 3. Promote reviewed data
-
-Candidate and canonical data live in separate trees. Promotion validates and copies a reviewed candidate, and **refuses to overwrite** an existing canonical file:
-
-```bash
-python -m scripts.ai2027_ingest promote \
-  data/candidates/ai-2027.json data/forecasts/ai-2027.json
-```
-
-This one-way guard ensures a later extraction cannot erase editorial work. To correct canonical data, edit `data/forecasts/ai-2027.json` directly in a reviewed change, validate it, and document material source interpretations or date corrections in the changelog. Do not delete and re-promote merely to bypass the guard. A newly published forecast should receive a new version/ID rather than silently changing the snapshot.
-AI Forecast Calendar converts milestones from published AI forecast timelines into static site pages and portable iCalendar (`.ics`) feeds. It is a presentation and distribution layer for existing forecasts, not a forecasting or prediction-resolution platform. See [SPEC.md](SPEC.md) for the product requirements and [DECISIONS.md](DECISIONS.md) for architectural choices.
-
-## Prerequisites
-
-- Node.js 20 or newer
-- npm (included with Node.js)
-
-## Local development
+The complete CLI syntax is available with:
 
 ```sh
-npm run build
+python -m scripts.ai2027_ingest --help
+python -m scripts.ai2027_ingest extract --help
+python -m scripts.ai2027_ingest validate --help
+python -m scripts.ai2027_ingest promote --help
 ```
-
-The dependency-free Node.js builder creates a clean production build in `dist/`. To preview it locally after building, serve that directory with any static file server, for example:
-
-```sh
-python3 -m http.server --directory dist 8080
-```
-
-`npm test` also performs a production build in its integration fixture and verifies
-that canonical input produces a mutually consistent site, manifest, and feed. The
-complete clean-build and generated-feed gate remains `npm run check`.
-
-## Repository structure
-
-```text
-.github/workflows/deploy.yml  GitHub Pages build and deployment
-data/forecasts/             Canonical, reviewed forecast records
-scripts/build.mjs            Static HTML and deterministic ICS builder
-site/index.html              Production HTML template
-site/styles.css              Production stylesheet
-src/forecast-calendar.js     Shared canonical validator and ICS serializer
-SPEC.md                      Product and engineering requirements
-DECISIONS.md                 Durable product and architecture decisions
-CHANGELOG.md                 Meaningful project changes
-```
-
-`dist/` is generated and must not be committed.
-
-## Forecast data pipeline
-
-Records under `data/forecasts/` are the canonical source for reviewed forecasts. They contain source provenance plus milestones with stable IDs, original timing language, normalized `YYYY-MM-DD` calendar anchors, and date precision.
-
-During `npm run build`:
-
-1. `scripts/build.mjs` validates the forecast data and renders it into `site/index.html`.
-2. The builder copies `site/styles.css` and generates each validated calendar feed.
-3. The complete static artifact lands in `dist/`, including `dist/index.html` and feeds at stable paths such as `dist/calendars/ai-2027.ics`.
-
-This keeps the website and subscriptions derived from a single human-reviewable source. Published forecast IDs are permanent because calendar clients retain their subscription URLs.
 
 ## Deployment
 
-The workflow in `.github/workflows/deploy.yml` builds and deploys `dist/` to GitHub Pages on every push to `main`; it can also be run manually. In the repository's **Settings → Pages**, select **GitHub Actions** as the source.
+GitHub Pages is the sole hosting target. [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) runs `npm run check`, uploads `dist/`, and deploys it on pushes to `main` or a manual dispatch. Enable **GitHub Actions** as the Pages source and configure the production custom domain before advertising subscriptions. The domain root must expose `/calendars/ai-2027.ics`; that path is a permanent public contract.
 
-Before sharing subscription links, configure a custom domain in GitHub Pages and DNS. The custom domain makes URLs such as `https://example.org/calendars/ai-2027.ics` independent of the repository name and allows a future host migration without breaking subscribers. Any replacement host must publish the contents of `dist/` at the domain root and preserve `/calendars/<forecast-id>.ics` exactly.
+The workflow runs the HTTP smoke test against the deployed Pages URL after deployment. It fetches both the page and feed and requires the live feed response—not a host-specific configuration file—to report a `Content-Type` containing `text/calendar`. Run the same verification against the production custom domain after DNS changes:
+
+```sh
+npm run smoke -- https://ai-forecast-calendar.org
+```
+
+Do not infer deployment success from a local build. Do not record Apple Calendar or Google Calendar success from automated checks. After a successful production deployment, complete the browser, physical-mobile, accessibility, download, subscription, and provider checks in [`docs/manual-verification.md`](docs/manual-verification.md) and [`docs/provider-testing.md`](docs/provider-testing.md), recording dates, versions, testers, and observations only for tests actually performed.
+
+## Download versus subscription
+
+Downloading and importing `/calendars/ai-2027.ics` creates a snapshot that will not receive corrections. Subscribing to that same absolute production URL lets the provider periodically fetch updates. Repeated imports commonly duplicate events, and provider refresh schedules are outside this project's control.
+
+See [`SPEC.md`](SPEC.md) for product requirements and [`DECISIONS.md`](DECISIONS.md) for durable architecture and publishing decisions.

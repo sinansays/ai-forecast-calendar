@@ -1,9 +1,0 @@
-[build]
-  command = "npm test && npm run build"
-  publish = "dist"
-
-[[headers]]
-  for = "/calendars/*.ics"
-  [headers.values]
-    Content-Type = "text/calendar; charset=utf-8"
-    Cache-Control = "public, max-age=300"

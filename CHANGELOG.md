@@ -1,22 +1,23 @@
 # Changelog
 
-## Unreleased
-
-- Added deterministic static site and iCalendar generation from validated canonical forecast data.
-- Added offline schema, iCalendar structure, determinism, and production artifact checks.
-- Added deployment smoke testing plus manual site and calendar-provider verification procedures.
-All notable changes to the AI Forecast Calendar are documented in this file.
+All notable changes to AI Forecast Calendar are documented here.
 
 ## Unreleased
+
+### Reconciled
+
+- Replaced conflicting README sections with one account of the canonical data, static build, ingestion, testing, GitHub Pages deployment, and post-deployment verification workflows.
+- Superseded the Eleventy proposal with the dependency-free Node.js architecture and removed alternative-host deployment configuration and obsolete generated/compatibility data.
+- Established `data/forecasts/` plus `data/forecast.schema.json` as the sole canonical record set and schema.
+- Consolidated AI 2027 into one reviewed 24-milestone record, retaining both dated long-range Race and Slowdown branches and stable compatible milestone IDs.
+- Standardized event identity as `<forecast-id>.<milestone-id>@ai-forecast-calendar` and feed locations as `/calendars/<forecast-id>.ics`.
+
+### Corrected
+
+- Corrected the opening AI 2027 source wording from “Mid-2025” to “Summer 2025” and normalized its representative anchor to 2025-07-15. Preserved “early” year references at February 15, month-only dates on the 15th, and year-only dates on July 1 while retaining the original source timing and precision.
 
 ### Added
 
-- Added the initial AI 2027 forecast calendar dataset, including source
-  provenance, deterministic date normalization, explicit uncertainty, and both
-  published post-November scenario branches.
-- Extended both the Race and Slowdown branches beyond 2027 through their dated
-  long-range outcomes, preserving each branch as a conditional timeline.
-- Initial Eleventy static-site foundation and local development commands.
-- Deterministic generation of `.ics` feeds from canonical forecast JSON.
-- GitHub Pages deployment workflow with stable calendar artifact paths.
-- Project decision log and expanded contributor documentation.
+- Added deterministic static site and iCalendar generation from validated canonical forecast data.
+- Added offline schema, iCalendar structure, determinism, Python ingestion, module, and production-artifact checks under the single `npm run check` gate.
+- Added a post-deployment HTTP smoke test that verifies the live `.ics` response media type, plus explicit manual browser, mobile, accessibility, download, subscription, and calendar-provider procedures.
