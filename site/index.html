@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Forecast Calendar</title>
+  <meta name="description" content="Published AI forecast milestones, placed alongside real life in your calendar.">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header><a class="wordmark" href="/">AI Forecast Calendar</a></header>
+  <main>
+    <p class="eyebrow">A calendar for predicted futures</p>
+    <h1>Forecasts feel different<br>when they have a date.</h1>
+    <p class="lede">Published AI timelines are often abstract. This project places their milestones in your calendar, alongside the days when life actually happens.</p>
+    <section aria-labelledby="available">
+      <h2 id="available">Available calendars</h2>
+      <article>
+        <div><p class="date">2025—2027 · 3 milestones</p><h3>AI 2027</h3><p>Milestones from the AI 2027 scenario, anchored to concrete dates and linked to the original publication.</p><p>Source: <a href="https://ai-2027.com/">AI 2027</a></p></div>
+        <div class="actions"><a class="primary" href="/calendars/ai-2027.ics">Download or subscribe (.ics)</a><button id="copy" type="button">Copy subscription URL</button><span id="status" aria-live="polite"></span></div>
+      </article>
+    </section>
+  </main>
+  <footer>Forecasts are presented as published scenarios, not as original predictions or endorsements.</footer>
+  <script>document.querySelector('#copy').addEventListener('click', async () => { const u = new URL('/calendars/ai-2027.ics', location.href).href; await navigator.clipboard.writeText(u); document.querySelector('#status').textContent = 'Copied'; });</script>
+</body>
+</html>

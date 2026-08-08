@@ -1,0 +1,14 @@
+{
+  "name": "ai-forecast-calendar",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "check": "node --test",
+    "test": "node --test",
+    "validate:data": "node scripts/validate-data.mjs data/forecasts.json",
+    "validate:ics": "node scripts/validate-ics.mjs dist/calendars/ai-2027.ics",
+    "smoke": "node scripts/smoke.mjs"
+  },
+  "engines": { "node": ">=20" }
+}
