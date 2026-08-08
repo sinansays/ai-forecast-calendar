@@ -1,0 +1,41 @@
+# Decision Log
+
+## 2026-08-08 — Static-site framework
+
+**Decision:** Use Eleventy 3 with Nunjucks templates and a small Node.js build script.
+
+**Context:** The product is a content-led microsite generated from a small set of structured forecasts. It needs design flexibility and build-time ICS generation, but no client application or server.
+
+**Rationale:** Eleventy produces plain static files, supports data-driven pages, adds little runtime complexity, and lets the calendar generator use Node's standard library. Nunjucks keeps page templates readable.
+
+**Consequences:** Contributors need Node.js, and build behavior lives in two straightforward layers: Eleventy for HTML and Node for ICS. There is no browser-side framework and no application server.
+
+## 2026-08-08 — Static hosting
+
+**Decision:** Deploy the `dist/` build artifact to GitHub Pages using GitHub Actions, with a custom domain recommended before calendar URLs are publicized.
+
+**Context:** The site and feeds are immutable static files, and subscription links must remain available without operating a server.
+
+**Rationale:** GitHub Pages matches the repository workflow, serves arbitrary `.ics` assets, and has negligible operational overhead. A custom domain decouples public URLs from the repository name or future hosting provider.
+
+**Consequences:** Pages must be enabled with GitHub Actions as its source. DNS and the custom domain are configured outside this repository. Moving hosts remains possible as long as the domain and paths are preserved.
+
+## 2026-08-08 — Canonical forecast data
+
+**Decision:** Store one UTF-8 JSON file per forecast in `src/_data/forecasts/`, with stable forecast and milestone IDs, source metadata, normalized ISO dates, source timing, date precision, and a milestone list.
+
+**Context:** Both pages and calendar feeds need the same reviewed source of truth. The data should remain inspectable and editable without database infrastructure.
+
+**Rationale:** JSON is natively supported by Node and Eleventy, deterministic, broadly tooled, and easy for humans and agents to review. A file boundary per forecast makes snapshots and corrections clear.
+
+**Consequences:** Schema validation can be added when the first data set lands. Editors must preserve stable IDs and explicitly record the difference between source timing and its calendar anchor.
+
+## 2026-08-08 — Stable ICS URLs
+
+**Decision:** Publish every feed at `/calendars/<forecast-id>.ics`; for example, `/calendars/ai-2027.ics`.
+
+**Context:** Calendar applications retain subscribed URLs, so changing a feed path breaks updates for existing subscribers.
+
+**Rationale:** A forecast's stable ID provides a short, predictable, host-independent path. Generating a real file at that location works on any static host without redirects or routing logic.
+
+**Consequences:** Forecast IDs and published paths are permanent API-like contracts. Revised forecasts should normally receive new IDs; corrections may update content at the existing path. Deployments must preserve the `calendars/` directory verbatim.

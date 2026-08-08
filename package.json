@@ -11,4 +11,22 @@
     "smoke": "node scripts/smoke.mjs"
   },
   "engines": { "node": ">=20" }
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:calendars": "node scripts/build-calendars.js",
+    "test": "node --test"
+    "clean": "rm -rf dist public/calendars",
+    "build:calendars": "node scripts/build-calendars.js",
+    "build": "npm run clean && npm run build:calendars && eleventy",
+    "dev": "npm run build:calendars && eleventy --serve",
+    "test": "npm run build"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.2"
+  },
+  "engines": {
+    "node": ">=20"
+  }
 }
