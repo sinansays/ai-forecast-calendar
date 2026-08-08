@@ -2,13 +2,13 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import test from 'node:test';
 import { execFileSync } from 'node:child_process';
-import { generateIcs, readData, validateData, validateIcs } from '../scripts/lib.mjs';
+import { generateIcs, validateForecast } from '../src/forecast-calendar.js';
+import { validateIcs } from '../scripts/lib.mjs';
 
-test('canonical forecast data satisfies the schema checks', () => assert.deepEqual(validateData(readData()), []));
 test('ICS generation is byte-for-byte deterministic', () => {
-  const calendar = readData().calendars[0];
-  assert.equal(generateIcs(calendar), generateIcs(structuredClone(calendar)));
-  assert.deepEqual(validateIcs(generateIcs(calendar)), []);
+  const record = JSON.parse(fs.readFileSync('data/forecasts/ai-2027.json', 'utf8'));
+  assert.equal(generateIcs(validateForecast(record)), generateIcs(validateForecast(structuredClone(record))));
+  assert.deepEqual(validateIcs(generateIcs(validateForecast(record))), []);
 });
 test('production build contains the landing page and validated stable feed', () => {
   execFileSync('npm', ['run', 'build']);
@@ -25,8 +25,8 @@ test('production build contains the landing page and validated stable feed', () 
     'build must copy the selected static stylesheet',
   );
   assert.match(html, /href="\/calendars\/ai-2027\.ics"/);
-  assert.match(html, /3 milestones/);
-  assert.match(html, /Agent-3 becomes a superhuman AI researcher/);
+  assert.match(html, /24 milestones/);
+  assert.match(html, /Stumbling agents begin changing work/);
   assert.match(html, /rel="canonical" href="https:\/\/ai-forecast-calendar\.org\/"/);
   assert.match(html, /property="og:title"/);
   assert.doesNotMatch(html, /\{\{CALENDARS\}\}/);

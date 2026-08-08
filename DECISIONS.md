@@ -8,7 +8,7 @@
 
 **Rationale:** The static builder already validates the canonical data, renders the selected HTML template, copies its stylesheet, and generates calendar feeds using only Node's standard library. Selecting it removes framework and template duplication without changing forecast milestone content or the published output contract.
 
-**Consequences:** `npm run build` produces `dist/index.html` and `dist/calendars/<forecast-id>.ics` directly from the selected pipeline. A build test pins `site/index.html` and `site/styles.css` as the production sources. The stronger behavior in `src/forecast-data.js` and `src/ics.js` remains available temporarily as donor code until it is migrated into the selected pipeline.
+**Consequences:** `npm run build` produces `dist/index.html` and `dist/calendars/<forecast-id>.ics` directly from the selected pipeline. A build test pins `site/index.html` and `site/styles.css` as the production sources. Canonical validation and ICS serialization share the retained `src/forecast-calendar.js` module.
 
 ## 2026-08-08 — Static-site framework
 
@@ -69,3 +69,16 @@ conditional `slowdown` or `race` branches. Existing compatible IDs
 `stumbling-agents`, `agent-1`, and `agent-2` are retained; the misleading old
 three-event index is not used to rename or re-date the remaining canonical
 milestones.
+## 2026-08-08: Canonical event UID convention
+
+**Decision:** Event UIDs are `<forecast-id>.<milestone-id>@ai-forecast-calendar`.
+
+**Context:** Before consolidating calendar generation, the preserved feed audit
+checked the known project-controlled public channels and found no successful
+deployment, release, Pages site, or other distribution. There were therefore no
+known public subscribers whose already-published UIDs required a compatibility
+map. The audit fixture remains committed as evidence of that check.
+
+**Consequences:** Forecast and milestone IDs are permanent identity fields. If
+evidence of an older public feed is discovered later, an explicit milestone-ID
+to published-UID map must be introduced before changing any affected event.
