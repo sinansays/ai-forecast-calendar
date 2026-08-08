@@ -8,7 +8,8 @@ Node.js 20 or newer is the only requirement. The checks do not fetch packages or
 
 ```sh
 npm run validate:data       # validate canonical schema and invariants
-npm test                    # schema, deterministic ICS, and production artifact tests
+npm test                    # focused JavaScript unit/integration tests (including a production-build fixture)
+npm run check               # complete local/CI gate; run this before deployment
 npm run build               # regenerate dist/ from canonical data
 npm run validate:ics        # inspect the generated AI 2027 feed
 ```
@@ -25,7 +26,14 @@ This deliberately small validator checks the portability requirements this gener
 
 Deploy the contents of `dist/`, preserving `/calendars/ai-2027.ics` as the stable public subscription URL. Configure the host to return `.ics` files as `text/calendar; charset=utf-8`; `netlify.toml` contains one working static-host configuration.
 
-After deployment, run the read-only HTTP smoke check:
+`npm test` is the fast JavaScript test suite: schema validation, deterministic ICS
+serialization, and production-build integration coverage. `npm run check` is the
+superset used before deployment: it runs `npm test`, the supported Python ingestion
+tests, a syntax/import check of every maintained JavaScript module, canonical-data
+validation, a clean production build, and validation of the generated ICS feed.
+
+Deployment smoke tests are intentionally not part of either command because they
+require a deployed origin. After deployment, run the read-only HTTP smoke check:
 
 ```sh
 npm run smoke -- https://calendar.example.org
@@ -48,7 +56,7 @@ Requires Node.js 20 or newer and has no runtime dependencies.
 
 ```sh
 npm run build
-npm test
+npm run check
 ```
 
 The build validates records under `data/forecasts/` before generating deterministic production artifacts under `dist/calendars/`. Invalid or incomplete source data stops the build; the ICS serializer does not accept an unvalidated object.
@@ -136,7 +144,9 @@ The dependency-free Node.js builder creates a clean production build in `dist/`.
 python3 -m http.server --directory dist 8080
 ```
 
-`npm test` also performs the production build and verifies that the selected static template and stylesheet produced the deployable site.
+`npm test` also performs a production build in its integration fixture and verifies
+that canonical input produces a mutually consistent site, manifest, and feed. The
+complete clean-build and generated-feed gate remains `npm run check`.
 
 ## Repository structure
 

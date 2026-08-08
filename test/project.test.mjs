@@ -12,11 +12,12 @@ test('ICS generation is byte-for-byte deterministic', () => {
   assert.equal(generateIcs(validateForecast(record)), generateIcs(validateForecast(structuredClone(record))));
   assert.deepEqual(validateIcs(generateIcs(validateForecast(record))), []);
 });
-test('production build contains the landing page and validated stable feed', () => {
+test('canonical data produces matching production site, manifest, and feed output', () => {
   const record = validateForecast(JSON.parse(fs.readFileSync('data/forecasts/ai-2027.json', 'utf8')));
   execFileSync('npm', ['run', 'build']);
   const html = fs.readFileSync('dist/index.html', 'utf8');
   const feed = fs.readFileSync('dist/calendars/ai-2027.ics', 'utf8');
+  const manifest = JSON.parse(fs.readFileSync('dist/calendars/index.json', 'utf8'));
   const template = fs.readFileSync('site/index.html', 'utf8');
   const [templateStart, templateEnd] = template
     .replaceAll('{{CANONICAL_URL}}', 'https://ai-forecast-calendar.org/')
@@ -39,6 +40,15 @@ test('production build contains the landing page and validated stable feed', () 
   const eventCount = (feed.match(/BEGIN:VEVENT\r\n/g) || []).length;
   assert.equal(websiteCount, record.milestones.length);
   assert.equal(websiteCount, eventCount, 'website milestone count must equal generated VEVENT count');
+  assert.deepEqual(manifest, [{
+    id: record.id,
+    title: record.title,
+    sourceUrl: record.source_url,
+    milestoneCount: record.milestones.length,
+  }]);
+  for (const milestone of record.milestones) {
+    assert.match(feed, new RegExp(`UID:${record.id}\\.${milestone.id}@ai-forecast-calendar`));
+  }
   assert.match(html, /rel="canonical" href="https:\/\/ai-forecast-calendar\.org\/"/);
   assert.match(html, /property="og:title"/);
   assert.doesNotMatch(html, /\{\{CALENDARS\}\}/);
