@@ -58,6 +58,15 @@ export function validateForecast(input) {
   return Object.freeze(result);
 }
 
+/** Reject forecast collections that would map more than one record to one feed. */
+export function assertUniqueForecastIds(forecasts) {
+  const ids = new Set();
+  for (const forecast of forecasts) {
+    if (ids.has(forecast.id)) throw new TypeError(`Duplicate forecast id: ${forecast.id}`);
+    ids.add(forecast.id);
+  }
+}
+
 export async function readCanonicalForecast(path) {
   return validateForecast(JSON.parse(await readFile(path, "utf8")));
 }

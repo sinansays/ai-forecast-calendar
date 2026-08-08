@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import test from 'node:test';
 import { validateCanonical } from '../scripts/validate-canonical.mjs';
+import { assertUniqueForecastIds, validateForecast } from '../src/forecast-calendar.js';
 
 const canonical = () => JSON.parse(fs.readFileSync('data/forecasts/ai-2027.json', 'utf8'));
 
@@ -21,6 +22,17 @@ test('canonical validation rejects duplicate IDs', () => {
   const record = canonical();
   record.milestones[1].id = record.milestones[0].id;
   assert.match(validateCanonical(record).join('\n'), /id is duplicated/);
+});
+
+test('forecast collections reject duplicate forecast IDs', () => {
+  const first = validateForecast(canonical());
+  const secondRecord = canonical();
+  secondRecord.title = 'A second forecast with a colliding ID';
+  const second = validateForecast(secondRecord);
+  assert.throws(
+    () => assertUniqueForecastIds([first, second]),
+    /Duplicate forecast id: ai-2027/,
+  );
 });
 
 test('canonical validation rejects invalid dates and precision values', () => {

@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { generateIcs, validateForecast } from '../src/forecast-calendar.js';
+import { assertUniqueForecastIds, generateIcs, validateForecast } from '../src/forecast-calendar.js';
 import { validateIcs } from './lib.mjs';
 
 const escapeHtml = value => String(value).replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[character]);
@@ -32,6 +32,7 @@ const forecasts = fs.readdirSync('data/forecasts')
   .sort()
   .map(file => validateForecast(JSON.parse(fs.readFileSync(path.join('data/forecasts', file), 'utf8'))));
 if (!forecasts.length) throw new Error('No canonical forecasts found');
+assertUniqueForecastIds(forecasts);
 fs.rmSync('dist', { recursive: true, force: true });
 fs.mkdirSync('dist/calendars', { recursive: true });
 for (const file of fs.readdirSync('site')) {
