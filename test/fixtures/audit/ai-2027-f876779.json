@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "captured_at": "2026-08-08T22:31:10Z",
+  "source_commit": "f876779a7ae93cb2224786e89c76d4cbf583e94e",
+  "fixture": "ai-2027-f876779.ics",
+  "sha256": "d91b724f378a62114bd8d73dea912fb7e90a19912d32afad11e836ea735757ba",
+  "byte_length": 2755,
+  "public_distribution": {
+    "status": "not_distributed",
+    "scope": "Known project-controlled GitHub distribution channels",
+    "basis": [
+      "The public repository reported has_pages=false.",
+      "The GitHub Pages API returned 404 Not Found.",
+      "All six historical deployment workflow runs had conclusion=failure.",
+      "The repository had zero deployments and zero releases."
+    ],
+    "checked_at": "2026-08-08T22:31:10Z",
+    "repository": "https://github.com/sinansays/ai-forecast-calendar"
+  },
+  "uids": [
+    "ai-2027.stumbling-agents@ai-forecast-calendar",
+    "ai-2027.agent-1@ai-forecast-calendar",
+    "ai-2027.agent-2@ai-forecast-calendar",
+    "ai-2027.agent-3@ai-forecast-calendar"
+  ]
+}
