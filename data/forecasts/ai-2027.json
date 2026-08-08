@@ -1,0 +1,49 @@
+{
+  "id": "ai-2027",
+  "title": "AI 2027",
+  "description": "Selected milestones from the AI 2027 scenario, anchored to calendar dates.",
+  "source_url": "https://ai-2027.com/",
+  "published_at": "2025-04-03",
+  "milestones": [
+    {
+      "id": "stumbling-agents",
+      "title": "Stumbling agents attract attention",
+      "calendar_date": "2025-06-15",
+      "source_timing": "Mid 2025",
+      "calendar_anchor": "June 15, 2025 (representative midpoint)",
+      "description": "The scenario opens with the world seeing early, unreliable personal AI agents.",
+      "context": "The agents can complete some computer tasks, but remain expensive and error-prone.",
+      "source_url": "https://ai-2027.com/research-automation"
+    },
+    {
+      "id": "agent-1",
+      "title": "Agent-1 accelerates AI research",
+      "calendar_date": "2026-01-15",
+      "source_timing": "Early 2026",
+      "calendar_anchor": "January 15, 2026 (representative date)",
+      "description": "OpenBrain deploys Agent-1 internally to speed up AI research and development.",
+      "context": "The scenario describes algorithmic progress beginning to compound through research automation.",
+      "source_url": "https://ai-2027.com/research-automation"
+    },
+    {
+      "id": "agent-2",
+      "title": "Agent-2 becomes a powerful coding agent",
+      "calendar_date": "2027-01-15",
+      "source_timing": "January 2027",
+      "calendar_anchor": "January 15, 2027 (month-only normalization)",
+      "description": "The scenario introduces Agent-2 as a much stronger coding and research system.",
+      "context": "Large numbers of copies work in parallel inside OpenBrain, further accelerating research.",
+      "source_url": "https://ai-2027.com/race"
+    },
+    {
+      "id": "agent-3",
+      "title": "Agent-3 becomes a superhuman AI researcher",
+      "calendar_date": "2027-03-15",
+      "source_timing": "March 2027",
+      "calendar_anchor": "March 15, 2027 (month-only normalization)",
+      "description": "Agent-3 is portrayed as a superhuman AI researcher that drives rapid algorithmic progress.",
+      "context": "The scenario's automated research feedback loop becomes substantially faster at this stage.",
+      "source_url": "https://ai-2027.com/superhuman-coder"
+    }
+  ]
+}

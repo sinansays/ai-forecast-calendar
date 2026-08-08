@@ -4,6 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "build:calendars": "node scripts/build-calendars.js",
+    "test": "node --test"
     "clean": "rm -rf dist public/calendars",
     "build:calendars": "node scripts/build-calendars.js",
     "build": "npm run clean && npm run build:calendars && eleventy",
