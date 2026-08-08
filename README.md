@@ -1,6 +1,6 @@
 # AI Forecast Calendar
 
-AI Forecast Calendar turns dated milestones from published AI scenarios into a small static site and portable iCalendar feeds. Canonical forecast records live under [`data/forecasts/`](data/forecasts/), conform to [`data/forecast.schema.json`](data/forecast.schema.json), and are validated independently before publication. [`data/forecasts.json`](data/forecasts.json) is the generated discovery/presentation compatibility index; generated files in `dist/` are disposable build output.
+AI Forecast Calendar turns dated milestones from published AI scenarios into a small static site and portable iCalendar feeds. Canonical forecast records live under [`data/forecasts/`](data/forecasts/), conform to [`data/forecast.schema.json`](data/forecast.schema.json), and are validated before publication. Generated files in `dist/` are disposable build output.
 
 ## Local workflow
 
@@ -39,7 +39,7 @@ Generated markup is not evidence of calendar-provider compatibility. Follow the 
 
 ## Adding a forecast
 
-Add a calendar and its milestones to `data/forecasts.json`. IDs are permanent slugs and become event UIDs and public paths. Preserve the source's stated timing separately from the concrete calendar anchor; use the 15th for a month-only date and July 1 for a year-only date. Every milestone needs an HTTPS source URL. Then run the complete local workflow above and review the text of the generated feed before deployment.
+Add a canonical calendar record and its milestones under `data/forecasts/`. IDs are permanent slugs and become event UIDs and public paths. Preserve the source's stated timing separately from the concrete calendar anchor; use the 15th for a month-only date and July 1 for a year-only date. Every milestone needs an HTTPS source URL. Then run the complete local workflow above and review the text of the generated feed before deployment.
 Converts published AI forecast timelines into calendar feeds and ICS files, making future milestones easier to compare against real life.
 
 ## Build and verify
@@ -47,18 +47,18 @@ Converts published AI forecast timelines into calendar feeds and ICS files, maki
 Requires Node.js 20 or newer and has no runtime dependencies.
 
 ```sh
-npm run build:calendars
+npm run build
 npm test
 ```
 
-The build validates `data/forecasts/ai-2027.json` before generating the deterministic production artifact at `public/calendars/ai-2027.ics`. Invalid or incomplete source data stops the build; the ICS serializer does not accept an unvalidated object.
+The build validates records under `data/forecasts/` before generating deterministic production artifacts under `dist/calendars/`. Invalid or incomplete source data stops the build; the ICS serializer does not accept an unvalidated object.
 
 ## Download or subscribe
 
 The same stable URL supports two different calendar workflows:
 
 * **Subscribe:** give `https://YOUR-HOST/calendars/ai-2027.ics` to the “calendar subscription” or “calendar from URL” feature in your calendar app. The app can periodically fetch corrections published at that URL.
-* **Download/import:** download `public/calendars/ai-2027.ics`, then import it as a file. Imported events are a copy and will **not** receive later corrections automatically.
+* **Download/import:** download `dist/calendars/ai-2027.ics`, then import it as a file. Imported events are a copy and will **not** receive later corrections automatically.
 
 Do not repeatedly import a downloaded file: most calendar applications create duplicate events. Prefer subscription when updates are wanted. Refresh schedules are controlled by each calendar provider and may not be immediate.
 
@@ -66,7 +66,7 @@ Do not repeatedly import a downloaded file: most calendar applications create du
 
 ## Data and identity guarantees
 
-Canonical forecast records have human-readable, stable forecast and milestone IDs. Event UIDs derive only from those IDs, while `DTSTAMP` derives from the source snapshot's stable `published_at` metadata. Generation never uses build time or array position. Approximate source timing remains distinct from the normalized calendar anchor in each event description.
+Canonical forecast records have human-readable, stable forecast and milestone IDs. Event UIDs derive only from those IDs, while `DTSTAMP` derives from the source version's stable `snapshot_date` metadata. Generation never uses build time or array position. Approximate source timing remains distinct from the normalized calendar anchor in each event description.
 ## AI 2027 source workflow
 
 The repository deliberately has one small, source-specific ingestion program rather than a reusable scraping framework. `scripts/ai2027_ingest.py` accepts an explicit source URL and either retrieves that URL or parses an explicitly named saved HTML file. Every candidate retains the source URL (including a section fragment), section name and anchor, the source's timing words, and the supporting passage.
@@ -142,12 +142,11 @@ python3 -m http.server --directory dist 8080
 
 ```text
 .github/workflows/deploy.yml  GitHub Pages build and deployment
-data/forecasts.json          Canonical, reviewed forecast data
+data/forecasts/             Canonical, reviewed forecast records
 scripts/build.mjs            Static HTML and deterministic ICS builder
 site/index.html              Production HTML template
 site/styles.css              Production stylesheet
-src/forecast-data.js         Temporary donor validation implementation
-src/ics.js                   Temporary donor ICS implementation
+src/forecast-calendar.js     Shared canonical validator and ICS serializer
 SPEC.md                      Product and engineering requirements
 DECISIONS.md                 Durable product and architecture decisions
 CHANGELOG.md                 Meaningful project changes
@@ -157,7 +156,7 @@ CHANGELOG.md                 Meaningful project changes
 
 ## Forecast data pipeline
 
-`data/forecasts.json` is the canonical source for the reviewed forecasts. It contains source provenance plus milestones with stable IDs, original timing language, normalized `YYYY-MM-DD` calendar anchors, and date precision.
+Records under `data/forecasts/` are the canonical source for reviewed forecasts. They contain source provenance plus milestones with stable IDs, original timing language, normalized `YYYY-MM-DD` calendar anchors, and date precision.
 
 During `npm run build`:
 
