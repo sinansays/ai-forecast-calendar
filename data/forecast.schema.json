@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ai-forecast-calendar.org/schemas/forecast.json",
+  "title": "Canonical forecast record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "title", "description", "source_url", "publication_date", "version", "attribution", "milestones"],
+  "properties": {
+    "id": { "$ref": "#/$defs/slug" },
+    "title": { "$ref": "#/$defs/text" },
+    "description": { "$ref": "#/$defs/text" },
+    "source_url": { "$ref": "#/$defs/url" },
+    "publication_date": { "$ref": "#/$defs/date" },
+    "version": {
+      "type": "object", "additionalProperties": false,
+      "required": ["label", "snapshot_date", "notes"],
+      "properties": { "label": { "$ref": "#/$defs/text" }, "snapshot_date": { "$ref": "#/$defs/date" }, "notes": { "$ref": "#/$defs/text" } }
+    },
+    "attribution": {
+      "type": "object", "additionalProperties": false,
+      "required": ["authors", "organization", "display"],
+      "properties": {
+        "authors": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/text" } },
+        "organization": { "$ref": "#/$defs/text" }, "display": { "$ref": "#/$defs/text" }
+      }
+    },
+    "milestones": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["id", "title", "source_timing", "calendar_date", "date_precision", "summary", "source_context", "source_url", "normalization_rationale"],
+        "properties": {
+          "id": { "$ref": "#/$defs/slug" }, "title": { "$ref": "#/$defs/text" },
+          "source_timing": { "$ref": "#/$defs/text" }, "calendar_date": { "$ref": "#/$defs/date" },
+          "date_precision": { "enum": ["exact", "month", "year", "range", "ambiguous"] },
+          "summary": { "$ref": "#/$defs/text" }, "source_context": { "$ref": "#/$defs/text" },
+          "source_url": { "$ref": "#/$defs/url" }, "normalization_rationale": { "$ref": "#/$defs/text" },
+          "uncertainty": { "$ref": "#/$defs/text" }, "branch": { "enum": ["slowdown", "race"] }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "text": { "type": "string", "minLength": 1 },
+    "slug": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "date": { "type": "string", "format": "date", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$" },
+    "url": { "type": "string", "format": "uri", "pattern": "^https://" }
+  }
+}

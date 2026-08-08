@@ -7,7 +7,7 @@
     "build": "node scripts/build.mjs",
     "check": "node --test",
     "test": "node --test",
-    "validate:data": "node scripts/validate-data.mjs data/forecasts.json",
+    "validate:data": "node scripts/validate-canonical.mjs data/forecasts/ai-2027.json",
     "validate:ics": "node scripts/validate-ics.mjs dist/calendars/ai-2027.ics",
     "smoke": "node scripts/smoke.mjs"
   },
