@@ -1,0 +1,65 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//AI Forecast Calendar//Forecast Milestones//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:AI 2027
+X-WR-CALDESC:Selected milestones from the AI 2027 scenario\, anchored to ca
+ lendar dates.
+BEGIN:VEVENT
+UID:ai-2027.stumbling-agents@ai-forecast-calendar
+DTSTAMP:20250403T000000Z
+DTSTART;VALUE=DATE:20250615
+DTEND;VALUE=DATE:20250616
+SUMMARY:AI 2027: Stumbling agents attract attention
+DESCRIPTION:Forecast: The scenario opens with the world seeing early\, unre
+ liable personal AI agents.\n\nSource timing: Mid 2025\n\nCalendar anchor: 
+ June 15\, 2025 (representative midpoint)\n\nContext: The agents can comple
+ te some computer tasks\, but remain expensive and error-prone.\n\nSource: 
+ https://ai-2027.com/research-automation
+URL:https://ai-2027.com/research-automation
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:ai-2027.agent-1@ai-forecast-calendar
+DTSTAMP:20250403T000000Z
+DTSTART;VALUE=DATE:20260115
+DTEND;VALUE=DATE:20260116
+SUMMARY:AI 2027: Agent-1 accelerates AI research
+DESCRIPTION:Forecast: OpenBrain deploys Agent-1 internally to speed up AI r
+ esearch and development.\n\nSource timing: Early 2026\n\nCalendar anchor: 
+ January 15\, 2026 (representative date)\n\nContext: The scenario describes
+  algorithmic progress beginning to compound through research automation.\n
+ \nSource: https://ai-2027.com/research-automation
+URL:https://ai-2027.com/research-automation
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:ai-2027.agent-2@ai-forecast-calendar
+DTSTAMP:20250403T000000Z
+DTSTART;VALUE=DATE:20270115
+DTEND;VALUE=DATE:20270116
+SUMMARY:AI 2027: Agent-2 becomes a powerful coding agent
+DESCRIPTION:Forecast: The scenario introduces Agent-2 as a much stronger co
+ ding and research system.\n\nSource timing: January 2027\n\nCalendar ancho
+ r: January 15\, 2027 (month-only normalization)\n\nContext: Large numbers 
+ of copies work in parallel inside OpenBrain\, further accelerating researc
+ h.\n\nSource: https://ai-2027.com/race
+URL:https://ai-2027.com/race
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:ai-2027.agent-3@ai-forecast-calendar
+DTSTAMP:20250403T000000Z
+DTSTART;VALUE=DATE:20270315
+DTEND;VALUE=DATE:20270316
+SUMMARY:AI 2027: Agent-3 becomes a superhuman AI researcher
+DESCRIPTION:Forecast: Agent-3 is portrayed as a superhuman AI researcher th
+ at drives rapid algorithmic progress.\n\nSource timing: March 2027\n\nCale
+ ndar anchor: March 15\, 2027 (month-only normalization)\n\nContext: The sc
+ enario's automated research feedback loop becomes substantially faster at 
+ this stage.\n\nSource: https://ai-2027.com/superhuman-coder
+URL:https://ai-2027.com/superhuman-coder
+TRANSP:TRANSPARENT
+END:VEVENT
+END:VCALENDAR
