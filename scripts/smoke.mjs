@@ -1,7 +1,8 @@
 #!/usr/bin/env node
-const base = (process.argv[2] || process.env.DEPLOY_URL || '').replace(/\/$/, '');
+const base = (process.argv[2] || process.env.DEPLOY_URL || '').replace(/\/+$/, '');
 if (!base) { console.error('Usage: npm run smoke -- https://deployment.example'); process.exit(2); }
-const siteUrl = (process.env.SITE_URL || 'https://forecastcalendar.org').replace(/\/$/, '');
+const expectedOrigin = process.env.SITE_URL || new URL(base).origin;
+const expectedSiteUrl = `${expectedOrigin.replace(/\/+$/, '')}/`;
 
 const failures = [];
 async function check(path, contentType, bodyChecks = []) {
@@ -19,8 +20,8 @@ await check('/', 'text/html', [
   'AI Forecast Calendar',
   'https://ai-2027.com/',
   '/calendars/ai-2027.ics',
-  `<link rel="canonical" href="${siteUrl}/">`,
-  `<meta property="og:url" content="${siteUrl}/">`,
+  `<link rel="canonical" href="${expectedSiteUrl}">`,
+  `<meta property="og:url" content="${expectedSiteUrl}">`,
 ]);
 await check('/calendars/ai-2027.ics', 'text/calendar', ['BEGIN:VCALENDAR', 'END:VCALENDAR', 'https://ai-2027.com/']);
 if (failures.length) { console.error(failures.join('\n')); process.exit(1); }
