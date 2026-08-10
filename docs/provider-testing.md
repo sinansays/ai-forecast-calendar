@@ -52,6 +52,6 @@ Do not enter “pass” based on `npm test`, the ICS validator, browser renderin
 | Provider and scenario | Test date | App/version and platform | Tester | Status | Observations / refresh timing |
 | --- | --- | --- | --- | --- | --- |
 | Apple Calendar — file import | — | — | — | Not performed | — |
-| Apple Calendar — URL subscription | — | — | — | Not performed | — |
+| Apple Calendar — URL subscription | 2026-08-09 | Apple Calendar (version not recorded) on macOS (version not recorded) | Project owner | Passed | Subscribed to `https://forecastcalendar.org/calendars/ai-2027.ics`; 24 events appeared. The reference event appeared once as a single all-day event on October 15, 2027, with readable paragraph breaks, source timing, calendar anchor, and a working source URL. Refresh propagation was not tested; no changed disposable feed was observed. |
 | Google Calendar — file import | — | — | — | Not performed | — |
 | Google Calendar — URL subscription | — | — | — | Not performed | — |
