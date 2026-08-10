@@ -14,8 +14,8 @@ Do not mark a row passed from source review, a local browser, or the automated s
 
 | Check | Production URL | Test date | Environment | Tester | Status | Observations |
 | --- | --- | --- | --- | --- | --- | --- |
-| Desktop browser and download | — | — | — | — | Not performed | Awaiting production deployment |
-| Physical mobile browser and download/handoff | — | — | — | — | Not performed | Awaiting production deployment |
-| Keyboard and focus accessibility | — | — | — | — | Not performed | Awaiting production deployment |
-| 320 px viewport and 200% zoom | — | — | — | — | Not performed | Awaiting production deployment |
-| Subscription URL and production content review | — | — | — | — | Not performed | Awaiting production deployment |
+| Desktop browser and download | https://forecastcalendar.org/ | 2026-08-09 | Google Chrome (version not recorded) on macOS (version not recorded), desktop layout | Project owner | Passed | The desktop layout was legible with no overlapping content; source and download actions worked. The downloaded `ai-2027.ics` feed contained all 24 events. |
+| Physical mobile browser and download/handoff | — | — | — | — | Not performed | Not separately tested |
+| Keyboard and focus accessibility | — | — | — | — | Not performed | Not separately tested |
+| 320 px viewport and 200% zoom | — | — | — | — | Not performed | Not separately tested |
+| Subscription URL and production content review | https://forecastcalendar.org/ | 2026-08-09 | Apple Calendar (version not recorded) on macOS (version not recorded) | Project owner | Passed | Subscribed using the exact feed URL `https://forecastcalendar.org/calendars/ai-2027.ics`. Apple Calendar displayed 24 events, including “AI 2027: Agent-3 becomes a superhuman AI researcher” once as a single all-day event on October 15, 2027, with readable description paragraphs, source timing, calendar anchor, and source URL. Production copy and source links were reviewed. Refresh propagation was not tested. |
