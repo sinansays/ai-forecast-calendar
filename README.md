@@ -53,8 +53,10 @@ GitHub Pages is the sole hosting target. [`.github/workflows/deploy.yml`](.githu
 The workflow runs the HTTP smoke test against the deployed Pages URL after deployment. It fetches both the page and feed and requires the live feed response—not a host-specific configuration file—to report a `Content-Type` containing `text/calendar`. Run the same verification against the production custom domain after DNS changes:
 
 ```sh
-npm run smoke -- https://ai-forecast-calendar.org
+npm run smoke -- https://forecastcalendar.org
 ```
+
+The forecast schema retains its original `$id`, `https://ai-forecast-calendar.org/schemas/forecast.json`, as a stable identifier because it has already been published in the repository. It identifies the schema; it is not a live production page or the canonical site origin.
 
 Do not infer deployment success from a local build. Do not record Apple Calendar or Google Calendar success from automated checks. After a successful production deployment, complete the browser, physical-mobile, accessibility, download, subscription, and provider checks in [`docs/manual-verification.md`](docs/manual-verification.md) and [`docs/provider-testing.md`](docs/provider-testing.md), recording dates, versions, testers, and observations only for tests actually performed.
 

@@ -20,7 +20,7 @@ test('canonical data produces matching production site, manifest, and feed outpu
   const manifest = JSON.parse(fs.readFileSync('dist/calendars/index.json', 'utf8'));
   const template = fs.readFileSync('site/index.html', 'utf8');
   const [templateStart, templateEnd] = template
-    .replaceAll('{{CANONICAL_URL}}', 'https://ai-forecast-calendar.org/')
+    .replaceAll('{{CANONICAL_URL}}', 'https://forecastcalendar.org/')
     .split('{{CALENDARS}}');
   assert.ok(html.startsWith(templateStart), 'build must use the selected static HTML template');
   assert.ok(html.endsWith(templateEnd), 'build must use the selected static HTML template');
@@ -49,7 +49,8 @@ test('canonical data produces matching production site, manifest, and feed outpu
   for (const milestone of record.milestones) {
     assert.match(feed, new RegExp(`UID:${record.id}\\.${milestone.id}@ai-forecast-calendar`));
   }
-  assert.match(html, /rel="canonical" href="https:\/\/ai-forecast-calendar\.org\/"/);
+  assert.match(html, /<link rel="canonical" href="https:\/\/forecastcalendar\.org\/">/);
+  assert.match(html, /<meta property="og:url" content="https:\/\/forecastcalendar\.org\/">/);
   assert.match(html, /property="og:title"/);
   assert.doesNotMatch(html, /\{\{CALENDARS\}\}/);
   assert.deepEqual(validateIcs(feed), []);
