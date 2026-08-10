@@ -43,7 +43,7 @@ fs.mkdirSync('dist/calendars', { recursive: true });
 for (const file of fs.readdirSync('site')) {
   if (file !== 'index.html') fs.copyFileSync(path.join('site', file), path.join('dist', file));
 }
-const siteUrl = (process.env.SITE_URL || 'https://ai-forecast-calendar.org').replace(/\/$/, '');
+const siteUrl = (process.env.SITE_URL || 'https://forecastcalendar.org').replace(/\/$/, '');
 const template = fs.readFileSync('site/index.html', 'utf8');
 const html = template.replaceAll('{{CANONICAL_URL}}', `${siteUrl}/`).replace('{{CALENDARS}}', forecasts.map(renderCalendar).join('\n'));
 fs.writeFileSync('dist/index.html', html);
