@@ -54,7 +54,7 @@ For sources other than AI 2027, follow the source-independent qualification, ext
 
 Source is hosted on GitHub and production is hosted by Cloudflare Workers. Cloudflare's Git integration automatically builds and deploys the site after a merge to `main`; GitHub Pages is not used and does not need to be enabled. [`.github/workflows/check.yml`](.github/workflows/check.yml) is CI only: it runs the authoritative `npm run check` gate but does not deploy the site.
 
-The Cloudflare Workers project must use `npm run build` as its build command and `dist/` as its static asset directory. The production domain root must expose `/calendars/ai-2027.ics`; that path is a permanent public contract. Repository credentials and project/domain settings are managed in Cloudflare rather than in this repository.
+The Cloudflare Workers project must use `npm run build` as its build command, `npx wrangler deploy` as its deploy command, and `npx wrangler versions upload` as its version command. [`wrangler.jsonc`](wrangler.jsonc) configures `dist/` as the static asset directory for both Wrangler commands. The production domain root must expose `/calendars/ai-2027.ics`; that path is a permanent public contract. Repository credentials and project/domain settings are managed in Cloudflare rather than in this repository.
 
 After Cloudflare reports a successful deployment, run the HTTP smoke test against the production custom domain. It fetches both the page and feed and requires the live feed response—not a host-specific configuration file—to report a `Content-Type` containing `text/calendar`:
 
