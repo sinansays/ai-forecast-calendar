@@ -10,8 +10,8 @@
     "test": "node --test",
     "test:python": "python -m unittest discover -s tests -v",
     "check:modules": "node scripts/check-modules.mjs",
-    "validate:data": "node scripts/validate-canonical.mjs data/forecasts/ai-2027.json",
-    "validate:ics": "node scripts/validate-ics.mjs dist/calendars/ai-2027.ics",
+    "validate:data": "node scripts/validate-canonical.mjs data/forecasts",
+    "validate:ics": "node scripts/validate-ics.mjs dist/calendars",
     "smoke": "node scripts/smoke.mjs"
   },
   "engines": {

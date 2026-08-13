@@ -1,0 +1,194 @@
+{
+  "id": "ai-2040-plan-a",
+  "title": "AI 2040: Plan A",
+  "description": "The AI Futures Project’s conditional scenario for slowing AI development, building international safeguards, and reaching aligned superintelligence in 2040.",
+  "source_url": "https://ai-2040.com/",
+  "publication_date": "2026-07-11",
+  "version": {
+    "label": "Plan A launch edition",
+    "snapshot_date": "2026-07-11",
+    "notes": "Plan A is primarily a recommendation, not the authors’ best guess. Its depicted downstream effects are conditional predictions if the plan is implemented."
+  },
+  "attribution": {
+    "authors": [
+      "Thomas Larsen",
+      "Romeo Dean",
+      "Brendan Halstead",
+      "Eli Lifland",
+      "Ryan Greenblatt",
+      "Daniel Kokotajlo"
+    ],
+    "organization": "AI Futures Project",
+    "display": "Thomas Larsen, Romeo Dean, Brendan Halstead, Eli Lifland, Ryan Greenblatt, and Daniel Kokotajlo · AI Futures Project"
+  },
+  "milestones": [
+    {
+      "id": "ai-transparency-act",
+      "title": "AI Transparency Act passes",
+      "source_timing": "2027",
+      "calendar_date": "2027-07-01",
+      "date_precision": "year",
+      "summary": "Congress responds to AI agents, concentration of power, and tense hearings with an omnibus AI Transparency Act.",
+      "source_context": "Plan A scenario: 2027-the-writing-on-the-wall",
+      "source_url": "https://ai-2040.com/#2027-the-writing-on-the-wall",
+      "normalization_rationale": "The scenario places this development in 2027; July 1 is the representative year midpoint.",
+      "uncertainty": "The authors call this incremental policy mixture a prediction, while Plan A itself is primarily a recommendation."
+    },
+    {
+      "id": "ai-election",
+      "title": "AI dominates the US election",
+      "source_timing": "2028",
+      "calendar_date": "2028-07-01",
+      "date_precision": "year",
+      "summary": "AI becomes the election’s biggest issue as white-collar work shifts toward managing agents and candidates propose increasingly dramatic responses.",
+      "source_context": "Plan A scenario: 2028-ai-on-the-ballot",
+      "source_url": "https://ai-2040.com/#2028-ai-on-the-ballot",
+      "normalization_rationale": "The scenario places this development in 2028; July 1 is the representative year midpoint.",
+      "uncertainty": "This political sequence is part of a recommended-policy scenario, not the authors’ best-guess future."
+    },
+    {
+      "id": "us-china-training-halt",
+      "title": "US and China halt frontier training",
+      "source_timing": "Rest of 2029",
+      "calendar_date": "2029-12-31",
+      "date_precision": "ambiguous",
+      "summary": "The US and China begin negotiating Plan A and temporarily halt AI training while compute declarations and verification are established.",
+      "source_context": "Plan A scenario: 2029-choose-a-path",
+      "source_url": "https://ai-2040.com/#2029-choose-a-path",
+      "normalization_rationale": "The scenario says the halt lasts for the rest of 2029; December 31 anchors the end of that stated period.",
+      "uncertainty": "The bilateral deal is a recommended intervention that the authors explicitly do not expect by default."
+    },
+    {
+      "id": "plan-a-established",
+      "title": "Plan A consortium is established",
+      "source_timing": "2030",
+      "calendar_date": "2030-07-01",
+      "date_precision": "year",
+      "summary": "A multinational consortium restarts cautious AI development under total research transparency, broad diffusion, safety slowdowns, and reversibility.",
+      "source_context": "Plan A scenario: 2030-plan-a-is-established",
+      "source_url": "https://ai-2040.com/#2030-plan-a-is-established",
+      "normalization_rationale": "The scenario places this development in 2030; July 1 is the representative year midpoint.",
+      "uncertainty": "Implementation is assumed successful for the scenario; subsequent effects are the authors’ conditional predictions."
+    },
+    {
+      "id": "safety-cases",
+      "title": "Frontier AI safety cases become mandatory",
+      "source_timing": "2031",
+      "calendar_date": "2031-07-01",
+      "date_precision": "year",
+      "summary": "Governments shift the burden of proof and require public, adversarially reviewed safety cases before frontier AI releases.",
+      "source_context": "Plan A scenario: 2031-safety-cases",
+      "source_url": "https://ai-2040.com/#2031-safety-cases",
+      "normalization_rationale": "The scenario places this development in 2031; July 1 is the representative year midpoint.",
+      "uncertainty": "The scenario also depicts nearly superhuman systems doing about one-third of cognitive labor by midyear."
+    },
+    {
+      "id": "controlled-growth",
+      "title": "AI labor drives controlled explosive growth",
+      "source_timing": "2032",
+      "calendar_date": "2032-07-01",
+      "date_precision": "year",
+      "summary": "Tens of millions of fast AI agents exceed US human cognitive labor while robotics investment and roughly 50% real GDP growth accelerate transformation.",
+      "source_context": "Plan A scenario: 2032-controlled-explosive-growth",
+      "source_url": "https://ai-2040.com/#2032-controlled-explosive-growth",
+      "normalization_rationale": "The scenario places this development in 2032; July 1 is the representative year midpoint.",
+      "uncertainty": "Economic quantities are model-dependent scenario estimates, not calibrated point forecasts."
+    },
+    {
+      "id": "citizens-dividend",
+      "title": "Citizen’s Dividend expands",
+      "source_timing": "2033",
+      "calendar_date": "2033-07-01",
+      "date_precision": "year",
+      "summary": "Compute and robot permit revenue funds a broad Citizen’s Dividend as AI and robot labor displace more human work.",
+      "source_context": "Plan A scenario: 2033-the-citizens-dividend",
+      "source_url": "https://ai-2040.com/#2033-the-citizens-dividend",
+      "normalization_rationale": "The scenario places this development in 2033; July 1 is the representative year midpoint.",
+      "uncertainty": "Redistribution design is partly a policy recommendation; the scenario’s downstream economics are conditional on Plan A."
+    },
+    {
+      "id": "compute-destruction",
+      "title": "Mutually assured compute destruction stabilizes deal",
+      "source_timing": "2034",
+      "calendar_date": "2034-07-01",
+      "date_precision": "year",
+      "summary": "Global compute reaches tens of billions of H100-equivalents while geographically exposed datacenters create a mutually assured compute destruction standoff.",
+      "source_context": "Plan A scenario: 2034-mutually-assured-compute-destruction",
+      "source_url": "https://ai-2040.com/#2034-mutually-assured-compute-destruction",
+      "normalization_rationale": "The scenario places this development in 2034; July 1 is the representative year midpoint.",
+      "uncertainty": "Compute growth and geopolitical stability depend on the scenario’s deal and industrial assumptions."
+    },
+    {
+      "id": "top-expert-pause",
+      "title": "Consortium pauses at top-human-expert AI",
+      "source_timing": "2035",
+      "calendar_date": "2035-07-01",
+      "date_precision": "year",
+      "summary": "The strongest AIs equal or surpass top experts in every field, and the consortium pauses at the strongest capability level it believes humans can control.",
+      "source_context": "Plan A scenario: 2035-pause-at-top-expert-ai",
+      "source_url": "https://ai-2040.com/#2035-pause-at-top-expert-ai",
+      "normalization_rationale": "The scenario places this development in 2035; July 1 is the representative year midpoint.",
+      "uncertainty": "This is a deliberate governance pause inside Plan A, not the authors’ default expectation."
+    },
+    {
+      "id": "life-after-work",
+      "title": "Top-expert AIs transform work and industry",
+      "source_timing": "2036",
+      "calendar_date": "2036-07-01",
+      "date_precision": "year",
+      "summary": "About 200 million fast AIs and two billion robots accelerate tasks until physical and institutional bottlenecks dominate.",
+      "source_context": "Plan A scenario: 2036-life-after-work",
+      "source_url": "https://ai-2040.com/#2036-life-after-work",
+      "normalization_rationale": "The scenario places this development in 2036; July 1 is the representative year midpoint.",
+      "uncertainty": "Agent, robot, income, and employment quantities are conditional scenario estimates."
+    },
+    {
+      "id": "accelerated-science",
+      "title": "AI-accelerated science reshapes society",
+      "source_timing": "2037",
+      "calendar_date": "2037-07-01",
+      "date_precision": "year",
+      "summary": "Hundreds of millions of top-expert AIs accelerate science by roughly 10–1,000 times across fields, yielding cures, clean energy, and social disruption.",
+      "source_context": "Plan A scenario: 2037-the-apocalyptic-arrival-of-truth-on-earth",
+      "source_url": "https://ai-2040.com/#2037-the-apocalyptic-arrival-of-truth-on-earth",
+      "normalization_rationale": "The scenario places this development in 2037; July 1 is the representative year midpoint.",
+      "uncertainty": "The scale and social consequences are speculative predictions conditional on the preceding trajectory."
+    },
+    {
+      "id": "alignment-science",
+      "title": "AI alignment becomes a mature science",
+      "source_timing": "2038",
+      "calendar_date": "2038-07-01",
+      "date_precision": "year",
+      "summary": "Goal and value formation, honesty training, and interpretability mature into a tested science, while the top-expert capability pause continues.",
+      "source_context": "Plan A scenario: 2038-ai-alignment-is-now-a-science",
+      "source_url": "https://ai-2040.com/#2038-ai-alignment-is-now-a-science",
+      "normalization_rationale": "The scenario places this development in 2038; July 1 is the representative year midpoint.",
+      "uncertainty": "The authors acknowledge that apparent scientific confidence could still be wrong."
+    },
+    {
+      "id": "beginning-to-trust",
+      "title": "Institutions begin transferring authority to AIs",
+      "source_timing": "2039",
+      "calendar_date": "2039-07-01",
+      "date_precision": "year",
+      "summary": "Aligned AIs become load-bearing advisers while governments negotiate deeper authority, alignment-based safety cases, and loosening space-economy caps.",
+      "source_context": "Plan A scenario: 2039-beginning-to-trust-ais",
+      "source_url": "https://ai-2040.com/#2039-beginning-to-trust-ais",
+      "normalization_rationale": "The scenario places this development in 2039; July 1 is the representative year midpoint.",
+      "uncertainty": "The transition depends on the scenario’s alignment breakthroughs and durable international coordination."
+    },
+    {
+      "id": "passing-the-torch",
+      "title": "Humanity passes the torch to aligned superintelligence",
+      "source_timing": "Late October 2040",
+      "calendar_date": "2040-10-25",
+      "date_precision": "ambiguous",
+      "summary": "Regulators resume capability scaling, institutions hand authority to aligned AIs, and humanity crosses a projected point of no return as trusted superintelligence emerges.",
+      "source_context": "Plan A scenario: 2040-passing-the-torch-to-ais",
+      "source_url": "https://ai-2040.com/#2040-passing-the-torch-to-ais",
+      "normalization_rationale": "October 25 is a transparent representative anchor for “late October”; the source explicitly says the exact day forecast is almost certainly wrong.",
+      "uncertainty": "The source says forecaster AIs project the point of no return for a day in late October with a months-wide 95% interval."
+    }
+  ]
+}

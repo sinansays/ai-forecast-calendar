@@ -14,6 +14,8 @@ The build produces:
 - `dist/calendars/index.json`, a generated discovery manifest; and
 - `dist/calendars/<forecast-id>.ics`, one stable feed per canonical forecast.
 
+The reviewed collection currently includes AI 2027, *AI 2040: Plan A*, *Situational Awareness*, the Grace et al. 2023 expert survey, and Peter Wildeford's AGI Timelines Model. Source qualification, editorial scope, and material caveats are recorded in [`docs/source-reviews.md`](docs/source-reviews.md).
+
 Forecast and milestone IDs are permanent slugs. An event UID is `<forecast-id>.<milestone-id>@ai-forecast-calendar`; neither array order nor build time affects identity. Source timing remains separate from its normalized calendar date.
 
 ## Build and test
@@ -26,7 +28,7 @@ npm test
 npm run check
 ```
 
-`npm run build` validates all canonical records and regenerates `dist/`. `npm test` runs the JavaScript tests. `npm run check` is the authoritative pre-deployment command: it runs JavaScript and Python tests, checks maintained module syntax/imports, validates canonical data, performs a clean build, and validates the generated AI 2027 feed. The command is offline and is the required local and CI gate.
+`npm run build` validates all canonical records and regenerates `dist/`. `npm test` runs the JavaScript tests. `npm run check` is the authoritative pre-deployment command: it runs JavaScript and Python tests, checks maintained module syntax/imports, validates canonical data, performs a clean build, and validates every generated forecast feed. The command is offline and is the required local and CI gate.
 
 ## AI 2027 ingestion workflow
 
@@ -45,6 +47,8 @@ python -m scripts.ai2027_ingest extract --help
 python -m scripts.ai2027_ingest validate --help
 python -m scripts.ai2027_ingest promote --help
 ```
+
+For sources other than AI 2027, follow the source-independent qualification, extraction, review, normalization, validation, and publication process in [`docs/adding-a-forecast.md`](docs/adding-a-forecast.md). New adapters may remain source-specific, but every calendar must pass the same provenance and fidelity review.
 
 ## Deployment
 
@@ -65,3 +69,4 @@ Do not infer deployment success from a local build. Do not record Apple Calendar
 Downloading and importing `/calendars/ai-2027.ics` creates a snapshot that will not receive corrections. Subscribing to that same absolute production URL lets the provider periodically fetch updates. Repeated imports commonly duplicate events, and provider refresh schedules are outside this project's control.
 
 See [`SPEC.md`](SPEC.md) for product requirements and [`DECISIONS.md`](DECISIONS.md) for durable architecture and publishing decisions.
+The current implementation-versus-specification audit, including the remaining V0 acceptance work, is tracked in [`docs/v0-status-audit.md`](docs/v0-status-audit.md).

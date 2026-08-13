@@ -22,3 +22,8 @@ All notable changes to AI Forecast Calendar are documented here.
 - Added deterministic static site and iCalendar generation from validated canonical forecast data.
 - Added offline schema, iCalendar structure, determinism, Python ingestion, module, and production-artifact checks under the single `npm run check` gate.
 - Added a post-deployment HTTP smoke test that verifies the live `.ics` response media type, plus explicit manual browser, mobile, accessibility, download, subscription, and calendar-provider procedures.
+- Added a V0 specification status audit that separates remaining product documentation from manual provider, mobile, accessibility, and operational acceptance work.
+- Added a source-independent guide and qualification checklist for reviewing, extracting, normalizing, validating, and publishing additional forecast calendars.
+- Added reviewed calendars for *Situational Awareness*, the Grace et al. 2023 expert survey, and Peter Wildeford's AGI Timelines Model, with stable feeds and transparent probability/date anchors.
+- Added multi-record canonical and generated-feed validation plus source reviews documenting qualification and editorial scope.
+- Added the 14-event *AI 2040: Plan A* calendar after the project owner identified its primary publication, clearly labeling its policy recommendations and conditional downstream predictions.

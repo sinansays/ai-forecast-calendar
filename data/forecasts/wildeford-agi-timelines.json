@@ -1,0 +1,81 @@
+{
+  "id": "wildeford-agi-timelines",
+  "title": "Peter Wildeford’s AGI Timelines Model",
+  "description": "Probability-threshold dates from a frozen run of Peter Wildeford’s METR-based Monte Carlo model of AGI timelines.",
+  "source_url": "https://github.com/peterhurford/agi_timelines",
+  "publication_date": "2025-04-16",
+  "version": {
+    "label": "Default-model extraction from commit 664e1cec (2026-02-09)",
+    "snapshot_date": "2026-02-09",
+    "notes": "Frozen 100,000-sample extraction from upstream commit 664e1cec269c49534e3a59860e1f096b7b6b7b2e. Calendar events represent cumulative percentile crossings, not five separate AGI arrivals."
+  },
+  "attribution": {
+    "authors": [
+      "Peter Wildeford"
+    ],
+    "organization": "Peter Wildeford",
+    "display": "Peter Wildeford"
+  },
+  "milestones": [
+    {
+      "id": "agi-p10",
+      "title": "Model distribution reaches 10% cumulative AGI probability",
+      "source_timing": "10th percentile: October 6, 2028",
+      "calendar_date": "2028-10-06",
+      "date_precision": "exact",
+      "summary": "Ten percent of a frozen 100,000-run snapshot of Wildeford’s default METR-based model reaches its AGI criterion by this date.",
+      "source_context": "AGI Timelines Model default Monte Carlo distribution, upstream commit 664e1cec (2026-02-09)",
+      "source_url": "https://github.com/peterhurford/agi_timelines",
+      "normalization_rationale": "This is the exact extracted percentile date from the frozen model extraction.",
+      "uncertainty": "The model result is highly sensitive to its benchmark extrapolation, AGI task threshold, reliability, domain, and acceleration assumptions."
+    },
+    {
+      "id": "agi-p25",
+      "title": "Model distribution reaches 25% cumulative AGI probability",
+      "source_timing": "25th percentile: January 28, 2030",
+      "calendar_date": "2030-01-28",
+      "date_precision": "exact",
+      "summary": "Twenty-five percent of the model snapshot reaches its AGI criterion by this date.",
+      "source_context": "AGI Timelines Model default Monte Carlo distribution, upstream commit 664e1cec (2026-02-09)",
+      "source_url": "https://github.com/peterhurford/agi_timelines",
+      "normalization_rationale": "This is the exact extracted percentile date from the frozen model extraction.",
+      "uncertainty": "A model percentile is not a guarantee and should not be read as independent evidence."
+    },
+    {
+      "id": "agi-p50",
+      "title": "Model median AGI date",
+      "source_timing": "50th percentile: March 12, 2032",
+      "calendar_date": "2032-03-12",
+      "date_precision": "exact",
+      "summary": "Half of the model snapshot reaches its AGI criterion by this date.",
+      "source_context": "AGI Timelines Model default Monte Carlo distribution, upstream commit 664e1cec (2026-02-09)",
+      "source_url": "https://github.com/peterhurford/agi_timelines",
+      "normalization_rationale": "This is the exact extracted median date from the frozen model extraction.",
+      "uncertainty": "The repository is an evolving model; this calendar preserves one dated snapshot rather than updating silently."
+    },
+    {
+      "id": "agi-p75",
+      "title": "Model distribution reaches 75% cumulative AGI probability",
+      "source_timing": "75th percentile: August 19, 2034",
+      "calendar_date": "2034-08-19",
+      "date_precision": "exact",
+      "summary": "Seventy-five percent of the model snapshot reaches its AGI criterion by this date.",
+      "source_context": "AGI Timelines Model default Monte Carlo distribution, upstream commit 664e1cec (2026-02-09)",
+      "source_url": "https://github.com/peterhurford/agi_timelines",
+      "normalization_rationale": "This is the exact extracted percentile date from the frozen model extraction.",
+      "uncertainty": "The percentile summarizes sampled assumptions and is not a discrete predicted milestone."
+    },
+    {
+      "id": "agi-p90",
+      "title": "Model distribution reaches 90% cumulative AGI probability",
+      "source_timing": "90th percentile: March 7, 2037",
+      "calendar_date": "2037-03-07",
+      "date_precision": "exact",
+      "summary": "Ninety percent of the model snapshot reaches its AGI criterion by this date.",
+      "source_context": "AGI Timelines Model default Monte Carlo distribution, upstream commit 664e1cec (2026-02-09)",
+      "source_url": "https://github.com/peterhurford/agi_timelines",
+      "normalization_rationale": "This is the exact extracted percentile date from the frozen model extraction.",
+      "uncertainty": "The model caps and parameter distributions affect its tail behavior."
+    }
+  ]
+}
