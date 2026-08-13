@@ -30,7 +30,7 @@
 
 **Rationale:** This records the production deployment architecture as configured rather than inferring the host from a repository workflow.
 
-**Consequences:** [`.github/workflows/check.yml`](.github/workflows/check.yml) validates changes but does not deploy them. Cloudflare owns the deployment trigger and project/domain configuration. The deployed `/calendars/ai-2027.ics` response must have a `Content-Type` containing `text/calendar`; the custom domain and stable `/calendars/<forecast-id>.ics` paths must survive any future hosting change.
+**Consequences:** [`.github/workflows/check.yml`](.github/workflows/check.yml) validates changes but does not deploy them. Cloudflare owns the deployment trigger and project/domain configuration, and its build command must be the full `npm run check` gate rather than `npm run build` alone. Cloudflare must not deploy when that command fails; the concurrent GitHub Actions workflow cannot gate a Git-integration deployment. The deployed `/calendars/ai-2027.ics` response must have a `Content-Type` containing `text/calendar`; the custom domain and stable `/calendars/<forecast-id>.ics` paths must survive any future hosting change.
 
 ## 2026-08-08 — GitHub Pages hosting (superseded)
 

@@ -19,6 +19,7 @@ All notable changes to AI Forecast Calendar are documented here.
 
 ### Corrected
 
+- Corrected the Cloudflare Workers build instructions to run the full `npm run check` pre-deployment gate instead of deploying after only `npm run build` succeeds.
 - Corrected the opening AI 2027 source wording from “Mid-2025” to “Summer 2025” and normalized its representative anchor to 2025-07-15. Preserved “early” year references at February 15, month-only dates on the 15th, and year-only dates on July 1 while retaining the original source timing and precision.
 - Corrected the documented production origin to `https://forecastcalendar.org/` and recorded the 2026-08-09 production desktop/download and Apple Calendar subscription acceptance results, without treating subscription as file-import or refresh-propagation evidence.
 
