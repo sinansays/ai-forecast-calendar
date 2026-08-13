@@ -1,0 +1,189 @@
+{
+  "id": "situational-awareness",
+  "title": "Situational Awareness",
+  "description": "Dated claims from Leopold Aschenbrenner’s 2024 scenario about AGI, compute build-out, automated research, and superintelligence.",
+  "source_url": "https://situational-awareness.ai/",
+  "publication_date": "2024-06-04",
+  "version": {
+    "label": "June 2024 published series",
+    "snapshot_date": "2024-06-04",
+    "notes": "Calendar anchors are a reviewed presentation of the dated scenario in Situational Awareness: The Decade Ahead."
+  },
+  "attribution": {
+    "authors": [
+      "Leopold Aschenbrenner"
+    ],
+    "organization": "Situational Awareness",
+    "display": "Leopold Aschenbrenner"
+  },
+  "milestones": [
+    {
+      "id": "graduates",
+      "title": "AI systems surpass most college graduates",
+      "source_timing": "2025–2026",
+      "calendar_date": "2025-12-31",
+      "date_precision": "range",
+      "summary": "AI systems become smarter than most college graduates.",
+      "source_context": "Introduction and From GPT-4 to AGI",
+      "source_url": "https://situational-awareness.ai/",
+      "normalization_rationale": "The source gives a two-year window; its midpoint is December 31, 2025.",
+      "uncertainty": "The source frames the broader AGI timeline as strikingly plausible rather than certain."
+    },
+    {
+      "id": "hundred-million-coders",
+      "title": "One hundred million automated junior coders",
+      "source_timing": "Next 1–2 years (from June 2024)",
+      "calendar_date": "2025-03-04",
+      "date_precision": "range",
+      "summary": "Automated systems provide the equivalent of roughly one hundred million junior software engineers.",
+      "source_context": "From AGI to Superintelligence",
+      "source_url": "https://situational-awareness.ai/",
+      "normalization_rationale": "The 12-to-24-month range from the June 4, 2024 publication is anchored at its 18-month midpoint.",
+      "uncertainty": "This is a scale illustration within the intelligence-explosion argument."
+    },
+    {
+      "id": "million-gpu-cluster",
+      "title": "Million-GPU training cluster",
+      "source_timing": "~2026",
+      "calendar_date": "2026-07-01",
+      "date_precision": "year",
+      "summary": "The largest training cluster reaches roughly one million H100-equivalent GPUs, about $10 billion and 1 GW.",
+      "source_context": "Racing to the Trillion-Dollar Cluster",
+      "source_url": "https://situational-awareness.ai/",
+      "normalization_rationale": "The source names approximately 2026; July 1 is the representative year midpoint.",
+      "uncertainty": "Hardware counts, cost, and power are order-of-magnitude projections."
+    },
+    {
+      "id": "ai-revenue",
+      "title": "Leading AI companies approach $100B revenue run rate",
+      "source_timing": "~mid-2026",
+      "calendar_date": "2026-07-01",
+      "date_precision": "ambiguous",
+      "summary": "Leading AI companies approach a combined annualized revenue scale of roughly $100 billion.",
+      "source_context": "Racing to the Trillion-Dollar Cluster",
+      "source_url": "https://situational-awareness.ai/",
+      "normalization_rationale": "The source uses a mid-2026 illustrative doubling trajectory; July 1 anchors midyear.",
+      "uncertainty": "The projection extrapolates a revenue-doubling trajectory and is not a company guarantee."
+    },
+    {
+      "id": "agi",
+      "title": "AGI becomes strikingly plausible",
+      "source_timing": "2027",
+      "calendar_date": "2027-07-01",
+      "date_precision": "year",
+      "summary": "Models capable of doing the work of AI researchers and engineers make AGI plausible around 2027.",
+      "source_context": "Introduction and From GPT-4 to AGI",
+      "source_url": "https://situational-awareness.ai/",
+      "normalization_rationale": "The source names 2027; July 1 is the representative year midpoint.",
+      "uncertainty": "The author calls the date a best guess/modal year and emphasizes uncertainty."
+    },
+    {
+      "id": "ten-trillion-company",
+      "title": "First $10 trillion company",
+      "source_timing": "2026–2027",
+      "calendar_date": "2027-01-01",
+      "date_precision": "range",
+      "summary": "AI-driven revenue growth supports the first company reaching a $10 trillion valuation.",
+      "source_context": "Racing to the Trillion-Dollar Cluster",
+      "source_url": "https://situational-awareness.ai/",
+      "normalization_rationale": "The source spans 2026–2027; January 1, 2027 is the midpoint boundary.",
+      "uncertainty": "A market-capitalization extrapolation, not a certainty."
+    },
+    {
+      "id": "ai-investment-trillion",
+      "title": "Annual AI investment exceeds $1 trillion",
+      "source_timing": "2027",
+      "calendar_date": "2027-07-01",
+      "date_precision": "year",
+      "summary": "Total annual AI investment rises above $1 trillion, roughly three percent of US GDP.",
+      "source_context": "Racing to the Trillion-Dollar Cluster",
+      "source_url": "https://situational-awareness.ai/",
+      "normalization_rationale": "The source names 2027; July 1 is the representative year midpoint.",
+      "uncertainty": "The estimate extrapolates investment growth and uses approximate magnitudes."
+    },
+    {
+      "id": "government-project",
+      "title": "Government AGI project begins",
+      "source_timing": "2027–2028",
+      "calendar_date": "2028-01-01",
+      "date_precision": "range",
+      "summary": "The US government creates a national AGI effort resembling a modern Manhattan Project.",
+      "source_context": "The Project",
+      "source_url": "https://situational-awareness.ai/",
+      "normalization_rationale": "The 2027–2028 range is anchored at the January 1, 2028 midpoint boundary.",
+      "uncertainty": "The exact institutional form is explicitly uncertain."
+    },
+    {
+      "id": "ten-million-gpu-cluster",
+      "title": "Ten-million-GPU training cluster",
+      "source_timing": "~2028",
+      "calendar_date": "2028-07-01",
+      "date_precision": "year",
+      "summary": "The largest training cluster reaches roughly ten million H100-equivalent GPUs, about $100 billion and 10 GW.",
+      "source_context": "Racing to the Trillion-Dollar Cluster",
+      "source_url": "https://situational-awareness.ai/",
+      "normalization_rationale": "The source names approximately 2028; July 1 is the representative year midpoint.",
+      "uncertainty": "Hardware counts, cost, and power are order-of-magnitude projections."
+    },
+    {
+      "id": "automated-researcher",
+      "title": "Prototype automated AI researcher",
+      "source_timing": "2027–2028",
+      "calendar_date": "2028-01-01",
+      "date_precision": "range",
+      "summary": "A prototype automated researcher can increasingly automate AI research itself.",
+      "source_context": "From AGI to Superintelligence",
+      "source_url": "https://situational-awareness.ai/",
+      "normalization_rationale": "The 2027–2028 range is anchored at the January 1, 2028 midpoint boundary.",
+      "uncertainty": "The source presents multiple possible timelines for the transition."
+    },
+    {
+      "id": "superintelligence",
+      "title": "Rapid intelligence explosion reaches superintelligence",
+      "source_timing": "2028–2029",
+      "calendar_date": "2029-01-01",
+      "date_precision": "range",
+      "summary": "Automated AI research drives a rapid transition from AGI toward superintelligence.",
+      "source_context": "From AGI to Superintelligence and The Project",
+      "source_url": "https://situational-awareness.ai/",
+      "normalization_rationale": "The 2028–2029 range is anchored at the January 1, 2029 midpoint boundary.",
+      "uncertainty": "Timing depends on AGI arriving and recursive research automation working."
+    },
+    {
+      "id": "hundred-million-gpus",
+      "title": "Hundreds of millions of GPUs support AI",
+      "source_timing": "By end of decade",
+      "calendar_date": "2029-12-31",
+      "date_precision": "ambiguous",
+      "summary": "Hundreds of millions of GPUs support AI systems by the end of the 2020s.",
+      "source_context": "Introduction and From AGI to Superintelligence",
+      "source_url": "https://situational-awareness.ai/",
+      "normalization_rationale": "“By the end of the decade” is anchored to December 31, 2029.",
+      "uncertainty": "The quantity is an order-of-magnitude projection."
+    },
+    {
+      "id": "trillion-dollar-cluster",
+      "title": "Trillion-dollar, 100-GW training cluster",
+      "source_timing": "~2030",
+      "calendar_date": "2030-07-01",
+      "date_precision": "year",
+      "summary": "A frontier training cluster reaches roughly one hundred million H100-equivalent GPUs, more than $1 trillion and 100 GW.",
+      "source_context": "Racing to the Trillion-Dollar Cluster",
+      "source_url": "https://situational-awareness.ai/",
+      "normalization_rationale": "The source names approximately 2030; July 1 is the representative year midpoint.",
+      "uncertainty": "The projection may face power, chip, finance, and permitting constraints."
+    },
+    {
+      "id": "superintelligence-summoned",
+      "title": "Superintelligence reshapes the world",
+      "source_timing": "2030",
+      "calendar_date": "2030-07-01",
+      "date_precision": "year",
+      "summary": "By 2030 the scenario has summoned superintelligence and entered a period of extraordinary upheaval.",
+      "source_context": "The Project and Parting Thoughts",
+      "source_url": "https://situational-awareness.ai/",
+      "normalization_rationale": "The source names 2030; July 1 is the representative year midpoint.",
+      "uncertainty": "This culmination is conditional on the preceding capability and governance sequence."
+    }
+  ]
+}

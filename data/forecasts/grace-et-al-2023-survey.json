@@ -1,0 +1,74 @@
+{
+  "id": "grace-et-al-2023-survey",
+  "title": "Thousands of AI Authors on the Future of AI",
+  "description": "Selected task and probability thresholds from the 2023 survey of 2,778 AI researchers reported by Grace et al.",
+  "source_url": "https://arxiv.org/abs/2401.02843",
+  "publication_date": "2024-01-05",
+  "version": {
+    "label": "arXiv 2024 report of the 2023 survey",
+    "snapshot_date": "2024-01-05",
+    "notes": "Events are aggregate survey thresholds. They do not state that an outcome occurs on its calendar anchor."
+  },
+  "attribution": {
+    "authors": [
+      "Katja Grace",
+      "Harlan Stewart",
+      "Julia Fabienne Sandkühler",
+      "Stephen Thomas",
+      "Ben Weinstein-Raun",
+      "Jan Brauner"
+    ],
+    "organization": "2023 Expert Survey on Progress in AI",
+    "display": "Grace et al. · 2023 Expert Survey on Progress in AI"
+  },
+  "milestones": [
+    {
+      "id": "hlmi-ten",
+      "title": "10% survey probability threshold for HLMI",
+      "source_timing": "2027",
+      "calendar_date": "2027-07-01",
+      "date_precision": "year",
+      "summary": "The aggregate survey distribution reaches a 10% probability of high-level machine intelligence by 2027.",
+      "source_context": "Headline result: high-level machine intelligence timelines",
+      "source_url": "https://arxiv.org/abs/2401.02843",
+      "normalization_rationale": "The paper reports a year; July 1 is its representative midpoint.",
+      "uncertainty": "HLMI is defined by the survey as unaided machines accomplishing every task better and more cheaply than human workers."
+    },
+    {
+      "id": "all-occupations-ten",
+      "title": "10% survey probability threshold for full occupational automation",
+      "source_timing": "2037",
+      "calendar_date": "2037-07-01",
+      "date_precision": "year",
+      "summary": "The aggregate survey distribution reaches a 10% probability that all human occupations become fully automatable by 2037.",
+      "source_context": "Headline result: full automation of labor",
+      "source_url": "https://arxiv.org/abs/2401.02843",
+      "normalization_rationale": "The paper reports a year; July 1 is its representative midpoint.",
+      "uncertainty": "The paper distinguishes full occupational automation from its HLMI definition."
+    },
+    {
+      "id": "hlmi-fifty",
+      "title": "50% survey probability threshold for HLMI",
+      "source_timing": "2047",
+      "calendar_date": "2047-07-01",
+      "date_precision": "year",
+      "summary": "The aggregate survey distribution reaches a 50% probability of high-level machine intelligence by 2047.",
+      "source_context": "Headline result: high-level machine intelligence timelines",
+      "source_url": "https://arxiv.org/abs/2401.02843",
+      "normalization_rationale": "The paper reports a year; July 1 is its representative midpoint.",
+      "uncertainty": "This is an aggregate survey probability, not a claim of certain arrival in 2047."
+    },
+    {
+      "id": "all-occupations-fifty",
+      "title": "50% survey probability threshold for full occupational automation",
+      "source_timing": "2116",
+      "calendar_date": "2116-07-01",
+      "date_precision": "year",
+      "summary": "The aggregate survey distribution reaches a 50% probability that all human occupations become fully automatable by 2116.",
+      "source_context": "Headline result: full automation of labor",
+      "source_url": "https://arxiv.org/abs/2401.02843",
+      "normalization_rationale": "The paper reports a year; July 1 is its representative midpoint.",
+      "uncertainty": "The very long tail and distinction from HLMI are material to interpreting this threshold."
+    }
+  ]
+}

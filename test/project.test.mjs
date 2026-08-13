@@ -13,7 +13,9 @@ test('ICS generation is byte-for-byte deterministic', () => {
   assert.deepEqual(validateIcs(generateIcs(validateForecast(record))), []);
 });
 test('canonical data produces matching production site, manifest, and feed output', () => {
-  const record = validateForecast(JSON.parse(fs.readFileSync('data/forecasts/ai-2027.json', 'utf8')));
+  const records = fs.readdirSync('data/forecasts').filter(file => file.endsWith('.json')).sort()
+    .map(file => validateForecast(JSON.parse(fs.readFileSync(path.join('data/forecasts', file), 'utf8'))));
+  const record = records.find(({ id }) => id === 'ai-2027');
   execFileSync('npm', ['run', 'build']);
   const html = fs.readFileSync('dist/index.html', 'utf8');
   const feed = fs.readFileSync('dist/calendars/ai-2027.ics', 'utf8');
@@ -40,12 +42,18 @@ test('canonical data produces matching production site, manifest, and feed outpu
   const eventCount = (feed.match(/BEGIN:VEVENT\r\n/g) || []).length;
   assert.equal(websiteCount, record.milestones.length);
   assert.equal(websiteCount, eventCount, 'website milestone count must equal generated VEVENT count');
-  assert.deepEqual(manifest, [{
-    id: record.id,
-    title: record.title,
-    sourceUrl: record.source_url,
-    milestoneCount: record.milestones.length,
-  }]);
+  assert.deepEqual(manifest, records.map(item => ({
+    id: item.id,
+    title: item.title,
+    sourceUrl: item.source_url,
+    milestoneCount: item.milestones.length,
+  })));
+  for (const item of records) {
+    const itemFeed = fs.readFileSync(`dist/calendars/${item.id}.ics`, 'utf8');
+    assert.match(html, new RegExp(`href="/calendars/${item.id}\\.ics"`));
+    assert.equal((itemFeed.match(/BEGIN:VEVENT\r\n/g) || []).length, item.milestones.length);
+    assert.deepEqual(validateIcs(itemFeed), []);
+  }
   for (const milestone of record.milestones) {
     assert.match(feed, new RegExp(`UID:${record.id}\\.${milestone.id}@ai-forecast-calendar`));
   }
