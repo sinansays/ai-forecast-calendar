@@ -24,9 +24,17 @@
 
 **Consequences:** Published forecast and milestone IDs are permanent. Corrections retain IDs; a genuinely new forecast version normally receives a new forecast ID. The pre-reconciliation audit found no successful public deployment or known subscribers requiring an older UID compatibility map. If contrary evidence appears, add an explicit published-UID map before changing an affected event.
 
-## 2026-08-08 — GitHub Pages hosting
+## 2026-08-13 — Cloudflare Workers hosting
 
-**Decision:** GitHub Pages, deployed by [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml), is the only supported production hosting target. A custom domain is required before subscription URLs are publicized.
+**Decision:** Cloudflare Workers is the production hosting target. GitHub hosts the source repository, and Cloudflare's Git integration automatically deploys merges to `main`. GitHub Pages is not used.
+
+**Rationale:** This records the production deployment architecture as configured rather than inferring the host from a repository workflow.
+
+**Consequences:** [`.github/workflows/check.yml`](.github/workflows/check.yml) validates changes but does not deploy them. Cloudflare owns the deployment trigger and project/domain configuration. The deployed `/calendars/ai-2027.ics` response must have a `Content-Type` containing `text/calendar`; the custom domain and stable `/calendars/<forecast-id>.ics` paths must survive any future hosting change.
+
+## 2026-08-08 — GitHub Pages hosting (superseded)
+
+**Decision:** GitHub Pages was selected as the production hosting target. This decision is superseded by the 2026-08-13 Cloudflare Workers decision above.
 
 **Rationale:** Pages directly hosts the immutable `dist/` artifact with no server operations. A custom domain preserves the public origin across a future infrastructure migration.
 
