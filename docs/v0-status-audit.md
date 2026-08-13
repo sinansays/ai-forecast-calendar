@@ -52,7 +52,7 @@ Section 23 says the repository should live in the General Cognitions GitHub orga
 
 The repository already contains the following required capabilities:
 
-- a dependency-free static build and GitHub Pages deployment workflow;
+- a dependency-free static build, CI workflow, and automatic Cloudflare Workers deployment from `main`;
 - a curated 24-milestone AI 2027 snapshot with dates, provenance, source timing, normalization rationale, uncertainty, and conditional branches;
 - deterministic ICS generation with stable feed paths and stable event UIDs;
 - automated schema, data, ICS, determinism, ingestion, build, and deployed-response checks;

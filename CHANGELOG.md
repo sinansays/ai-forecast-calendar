@@ -4,9 +4,14 @@ All notable changes to AI Forecast Calendar are documented here.
 
 ## Unreleased
 
+### Changed
+
+- Corrected the deployment architecture to use the existing Cloudflare Workers Git integration on merges to `main`, removed the erroneous GitHub Pages deployment job, and retained GitHub Actions as a CI check only.
+- Standardized local development, package metadata, and CI on Node.js 24.
+
 ### Reconciled
 
-- Replaced conflicting README sections with one account of the canonical data, static build, ingestion, testing, GitHub Pages deployment, and post-deployment verification workflows.
+- Replaced conflicting README sections with one account of the canonical data, static build, ingestion, testing, deployment, and post-deployment verification workflows.
 - Superseded the Eleventy proposal with the dependency-free Node.js architecture and removed alternative-host deployment configuration and obsolete generated/compatibility data.
 - Established `data/forecasts/` plus `data/forecast.schema.json` as the sole canonical record set and schema.
 - Consolidated AI 2027 into one reviewed 24-milestone record, retaining both dated long-range Race and Slowdown branches and stable compatible milestone IDs.
